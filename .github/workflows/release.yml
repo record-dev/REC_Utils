@@ -51,30 +51,30 @@ jobs:
           TARGET_NAME=${{ github.event.repository.name }}
           DIST_DIR="_dist"
           TARGET_PATH="$DIST_DIR/$TARGET_NAME"
-         
+          
           mkdir -p "$TARGET_PATH"
-         
+          
           # フォルダ・ファイルのコピー
-          cp -r .vscode client server shared .gitignore LICENSE README.md fxmanifest.lua "$TARGET_PATH/"
-         
+          cp -r .vscode client config locales server shared .gitignore LICENSE README.md annotations.lua fxmanifest.lua "$TARGET_PATH/"
+          
           # web/build の処理
           if [ -d "web/build" ]; then
             mkdir -p "$TARGET_PATH/web"
             cp -r web/build "$TARGET_PATH/web/"
           fi
-         
+          
           # SQLの処理 (存在しなくてもエラーにしない)
           cp *.sql "$TARGET_PATH/" 2>/dev/null || :
-         
+          
           # テストファイルの削除
           rm -f "$TARGET_PATH/shared/sh_main.test.lua"
           rm -f "$TARGET_PATH/client/cl_main.test.lua"
           rm -f "$TARGET_PATH/server/sv_main.test.lua"
-         
+          
           # config.debugMode を false に強制的に設定
-          sed -i "s/^config\.debugMode\s*=\s*.*/config.debugMode = false/" "$TARGET_PATH/shared/sh_config.lua"
-          sed -i "s/^config\.debugMode\s*=\s*.*/config.debugMode = false/" "$TARGET_PATH/server/sv_config.lua"
-         
+          sed -i "s/^config\.debugMode\s*=\s*.*/config.debugMode = false/" "$TARGET_PATH/config/sh_config.lua"
+          sed -i "s/^config\.debugMode\s*=\s*.*/config.debugMode = false/" "$TARGET_PATH/config/sv_config.lua"
+
           # ZIP圧縮 (ファイル名をリポジトリ名にする)
           cd "$DIST_DIR"
           zip -r "../${TARGET_NAME}.zip" "$TARGET_NAME"
