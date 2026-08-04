@@ -1,3 +1,3 @@
 
 ## Documentation
-https://nazumod-or-script.gitbook.io/re-cord/scripts/rec_utils
+https://docs.re-cord.dev/en/common-dependencies/rec_utils
