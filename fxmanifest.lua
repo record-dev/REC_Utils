@@ -13,7 +13,7 @@ fx_version 'cerulean'
 game 'gta5'
 lua54 'yes'
 
-version '0.2.3.4'
+version '0.2.3.5'
 author 'Ⓒ RE:CORD | @Nazu'
 description 'Ⓒ RE:CORD Utils'
 
