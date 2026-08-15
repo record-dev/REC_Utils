@@ -101,7 +101,7 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      
       - name: Post to Discord
         if: steps.changelog.outcome == 'success'
         env:
@@ -118,6 +118,9 @@ jobs:
             exit 1
           fi
 
+          # doc_url用にリポジトリ名を小文字化
+          REPO_NAME_LOWER="${REPO_NAME,,}"
+
           # text display は1ブロック4000文字制限があるのでトリム
           CHANGELOG_TRIMMED=$(echo "$CHANGELOG" | cut -c1-3500)
 
@@ -126,7 +129,7 @@ jobs:
             --arg tag "$TAG_NAME" \
             --arg changelog "$CHANGELOG_TRIMMED" \
             --arg latest_url "$LATEST_URL" \
-            --arg doc_url "https://docs.re-cord.dev/" \
+            --arg doc_url "https://docs.re-cord.dev/en/common-dependencies/$REPO_NAME_LOWER" \
             '{
               flags: 32768,
               components: [
@@ -157,3 +160,14 @@ jobs:
                -X POST \
                -d "$PAYLOAD" \
                "$DISCORD_WEBHOOK?wait=true&with_components=true"
+
+      - name: Commit and Push version bump
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          git config --local user.name "${{ steps.app-token.outputs.app-slug }}[bot]"
+          git config --local user.email "${{ steps.app-user.outputs.id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com"
+          git add fxmanifest.lua
+          git commit -m "chore: bump version to ${{ github.ref_name }}"
+          git pull --rebase origin main
+          git push origin HEAD:main
