@@ -18,7 +18,6 @@ author 'Ⓒ RE:CORD | @Nazu'
 description 'Ⓒ RE:CORD Utils'
 
 dependencies {
-    'ox_lib',
     'REC_Library',
 }
 
