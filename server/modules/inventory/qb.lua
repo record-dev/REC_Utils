@@ -20,7 +20,7 @@ local QB_INVENTORY = {}
 local qb_inventory = exports["qb-inventory"]
 
 function QB_INVENTORY:items(name)
-    if framework == frameworkTypes.qbox then
+    if framework == frameworkTypes.qbx then
         error("QBox does not have a shared item list.")
     elseif framework == frameworkTypes.qb then
         if name == nil then

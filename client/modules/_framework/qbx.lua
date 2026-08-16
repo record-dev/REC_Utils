@@ -11,7 +11,7 @@ local framework = apiShCfg.framework
 local apiShEnums = shApi.Enums
 local frameworkTypes = apiShEnums.FrameworkTypes
 
-if framework ~= frameworkTypes.qbox then
+if framework ~= frameworkTypes.qbx then
     return
 end
 
