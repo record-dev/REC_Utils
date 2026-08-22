@@ -16,7 +16,11 @@ end
 local CUSTOM_BANKING = {}
 
 function CUSTOM_BANKING:getAccount(society)
-    return 
+
+    -- 利用側が .money を見るので形だけ揃える
+    return {
+        money = 0,
+    }
 end
 
 return CUSTOM_BANKING

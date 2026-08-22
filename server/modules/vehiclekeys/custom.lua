@@ -16,7 +16,9 @@ end
 local CUSTOM_VEHICLEKEYS = {}
 
 function CUSTOM_VEHICLEKEYS:hasKey(playerId, vehicle)
-    return 
+
+    -- 鍵の概念が無いので常に所持扱い
+    return true
 end
 
 function CUSTOM_VEHICLEKEYS:giveKey(playerId, vehicle, skipNotify)
