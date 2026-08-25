@@ -16,11 +16,11 @@ end
 local CUSTOM_INVENTORY = {}
 
 function CUSTOM_INVENTORY:items(name)
-    return 
+    return nil
 end
 
 function CUSTOM_INVENTORY:getItemCount(item)
-    return 
+    return 0
 end
 
 return CUSTOM_INVENTORY

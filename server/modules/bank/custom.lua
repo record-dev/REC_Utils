@@ -16,7 +16,11 @@ end
 local CUSTOM_BANKING = {}
 
 function CUSTOM_BANKING:getAccount(society)
-    return 
+
+    -- callers read .money, so keep the shape
+    return {
+        money = 0,
+    }
 end
 
 return CUSTOM_BANKING

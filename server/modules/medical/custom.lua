@@ -33,7 +33,14 @@ function CUSTOM_MEDICAL:kill(playerId)
 end
 
 function CUSTOM_MEDICAL:isDead(playerId)
-    return 
+
+    -- exists check
+    local ped = GetPlayerPed(playerId)
+    if ped == 0 then
+        return false
+    end
+
+    return GetEntityHealth(ped) <= 0
 end
 
 return CUSTOM_MEDICAL

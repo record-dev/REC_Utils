@@ -16,11 +16,11 @@ end
 local CUSTOM_INVENTORY = {}
 
 function CUSTOM_INVENTORY:items(name)
-    return 
+    return nil
 end
 
 function CUSTOM_INVENTORY:getInventory(inv)
-    return 
+    return false
 end
 
 function CUSTOM_INVENTORY:openInventory(playerId, inv)
@@ -31,7 +31,7 @@ function CUSTOM_INVENTORY:openInventory(playerId, inv)
 end
 
 function CUSTOM_INVENTORY:getItem(inv, item, metaData)
-    return 
+    return nil
 end
 
 function CUSTOM_INVENTORY:getItemCount(playerId, item)

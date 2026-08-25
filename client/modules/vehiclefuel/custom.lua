@@ -19,10 +19,17 @@ local CUSTOM_FUEL = {}
 
 function CUSTOM_FUEL:getFuel(vehicle)
     -- return custom_fuel:GetFuel(vehicle)
+
+    -- no fuel script, return the native value
+    return GetVehicleFuelLevel(vehicle)
 end
 
 function CUSTOM_FUEL:setFuel(vehicle, fuel)
     -- return custom_fuel:SetFuel(vehicle, fuel)
+
+    -- no fuel script, write it through the native directly
+    SetVehicleFuelLevel(vehicle, fuel + 0.0)
+    return true
 end
 
 return CUSTOM_FUEL

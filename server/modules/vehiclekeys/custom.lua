@@ -16,7 +16,9 @@ end
 local CUSTOM_VEHICLEKEYS = {}
 
 function CUSTOM_VEHICLEKEYS:hasKey(playerId, vehicle)
-    return 
+
+    -- no keys here, so everyone always has them
+    return true
 end
 
 function CUSTOM_VEHICLEKEYS:giveKey(playerId, vehicle, skipNotify)

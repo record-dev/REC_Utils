@@ -1,5 +1,4 @@
 
-
 ---[[
 ---     Support ESX
 ---]]
@@ -20,6 +19,16 @@ end
 ---@diagnostic disable-next-line: missing-fields
 local ESX = {}
 
+function ESX:setOnPlayerLoaded(onPlayerLoaded)
+    RegisterNetEvent("esx:playerLoaded", function (...)
+        onPlayerLoaded()
+    end)
+end
 
+function ESX:setOnPlayerUnLoaded(onPlayerUnLoaded)
+    RegisterNetEvent("esx:onPlayerLogout", function (...)
+        onPlayerUnLoaded()
+    end)
+end
 
 return ESX
