@@ -34,7 +34,7 @@ end
 
 function CUSTOM_MEDICAL:isDead(playerId)
 
-    -- 存在確認
+    -- exists check
     local ped = GetPlayerPed(playerId)
     if ped == 0 then
         return false

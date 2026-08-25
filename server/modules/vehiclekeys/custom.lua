@@ -17,7 +17,7 @@ local CUSTOM_VEHICLEKEYS = {}
 
 function CUSTOM_VEHICLEKEYS:hasKey(playerId, vehicle)
 
-    -- 鍵の概念が無いので常に所持扱い
+    -- no keys here, so everyone always has them
     return true
 end
 

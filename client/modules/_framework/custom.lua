@@ -1,7 +1,7 @@
 
 ---[[
 ---     Support CUSTOM
----     framework が検出されなかったときの落とし先。利用者が自分のフレームワークに合わせて中身を書く
+---     fallback when no framework is detected, fill it in for your own framework
 ---]]
 
 ---@type REC_Library.Shared.API
@@ -21,14 +21,14 @@ end
 local CUSTOM = {}
 
 function CUSTOM:setOnPlayerLoaded(onPlayerLoaded)
-    -- 自分のフレームワークのロードイベントに差し替える
+    -- replace this with your framework's load event
     -- RegisterNetEvent("xxx:playerLoaded", function (...)
     --     onPlayerLoaded()
     -- end)
 end
 
 function CUSTOM:setOnPlayerUnLoaded(onPlayerUnLoaded)
-    -- 自分のフレームワークのアンロードイベントに差し替える
+    -- replace this with your framework's unload event
     -- RegisterNetEvent("xxx:playerLogout", function (...)
     --     onPlayerUnLoaded()
     -- end)

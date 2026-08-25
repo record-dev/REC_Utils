@@ -1,7 +1,7 @@
 
 ---[[
 ---     Support CUSTOM
----     framework が検出されなかったときの落とし先。利用者が自分のフレームワークに合わせて中身を書く
+---     fallback when no framework is detected, fill it in for your own framework
 ---]]
 
 ---@type REC_Library.Shared.API
@@ -28,7 +28,7 @@ function CUSTOM:getPlayers()
     ---@type REC_Utils.Server.Modules.Framework.GetPlayers.Return[]
     local players = {}
 
-    -- ここで自分のフレームワークから全プレイヤーを集める
+    -- collect every player from your framework here
     -- players[#players+1] = { PlayerData = self:getPlayerData(src) }
 
     return players
@@ -39,7 +39,7 @@ end
 ---]]
 function CUSTOM:getPlayerData(playerId)
 
-    -- ここで自分のフレームワークからプレイヤー情報を取得し、下の形に寄せて返す
+    -- fetch the player info from your framework here and return it in the shape below
     -- return {
     --     source = playerId,
     --     citizenId = "",
@@ -128,7 +128,7 @@ function CUSTOM:getJobs()
     ---@type table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
     local jobs = {}
 
-    -- ここで自分のフレームワークのジョブ一覧を詰める
+    -- fill in the job list from your framework here
     -- jobs["police"] = { label = "Police", type = "leo" }
 
     return jobs
@@ -189,7 +189,7 @@ function CUSTOM:doesRequiredJobsExist(requiredJobs, needed)
 end
 
 function CUSTOM:setOnPlayerLoaded(onPlayerLoaded)
-    -- 自分のフレームワークのロードイベントに差し替える
+    -- replace this with your framework's load event
     -- ---@param src integer
     -- AddEventHandler("xxx:playerLoaded", function (src)
     --     onPlayerLoaded(src)
@@ -197,7 +197,7 @@ function CUSTOM:setOnPlayerLoaded(onPlayerLoaded)
 end
 
 function CUSTOM:setOnPlayerUnLoaded(onPlayerUnLoaded)
-    -- 自分のフレームワークのアンロードイベントに差し替える
+    -- replace this with your framework's unload event
     -- ---@param src integer
     -- AddEventHandler("xxx:playerDropped", function (src)
     --     onPlayerUnLoaded(src)

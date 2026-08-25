@@ -23,8 +23,8 @@ local ESX = {}
 local esx = exports.es_extended:getSharedObject()
 
 ---[[
---- xPlayer を PlayerData の形に寄せる
---- onDuty は ESX 標準に無いので、未定義なら勤務中として扱う
+--- map an xPlayer onto the PlayerData shape
+--- ESX has no standard onDuty, so an undefined value counts as on duty
 ---]]
 ---@param xPlayer table
 ---@return REC_Utils.Server.Modules.Framework.GetPlayers.Return.PlayerData
@@ -76,7 +76,7 @@ function ESX:getPlayerData(playerId)
     ---@type table|nil
     local xPlayer = esx.GetPlayerFromId(playerId)
 
-    -- 存在確認
+    -- exists check
     if xPlayer == nil then
         print(("^1failed to get player. playerId: %d^0"):format(playerId))
         return nil

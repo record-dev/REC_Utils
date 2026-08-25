@@ -16,7 +16,7 @@ end
 local CUSTOM_MEDICAL = {}
 
 function CUSTOM_MEDICAL:isLastStand()
-    -- 瀕死状態の概念が無いので常に false
+    -- no downed state here, so always false
     return false
 end
 

@@ -22,8 +22,8 @@ local OX = {}
 local ox_core = exports.ox_core
 
 ---[[
---- ox_core のグループを PlayerData.job の形に寄せる
---- activeGroup があればそれを優先し、無ければ最初に見つかったグループを使う
+--- map an ox_core group onto the PlayerData.job shape
+--- activeGroup wins, otherwise the first group found is used
 ---]]
 ---@param playerId integer
 ---@return REC_Utils.Server.Modules.Framework.GetPlayers.Return.PlayerData.Job
@@ -35,7 +35,7 @@ local function getJobFromGroups(playerId)
     ---@type string|nil
     local activeGroup = ox_core:CallPlayer(playerId, "get", "activeGroup")
 
-    -- 所属グループを決める
+    -- decide the group
     local jobName, jobGrade = (function ()
         if activeGroup ~= nil and groups[activeGroup] ~= nil then
             return activeGroup, groups[activeGroup]
@@ -46,7 +46,7 @@ local function getJobFromGroups(playerId)
         return "unemployed", 0
     end)()
 
-    -- ラベル取得
+    -- get the label
     local group = ox_core:GetGroup(jobName)
 
     return {
@@ -93,7 +93,7 @@ function OX:getPlayerData(playerId)
     ---@type table|nil
     local player = ox_core:GetPlayer(playerId)
 
-    -- 存在確認
+    -- exists check
     if player == nil then
         print(("^1failed to get player. playerId: %d^0"):format(playerId))
         return nil
@@ -141,7 +141,7 @@ function OX:hasJob(playerId, job, grades, onDutyOnly)
     ---@type string|nil
     local activeGroup = ox_core:CallPlayer(playerId, "get", "activeGroup")
 
-    -- 指定ジョブのうち所属しているものを探す
+    -- find which of the given jobs they belong to
     local jobName, jobGrade = (function ()
         if type(job) == "table" then
             for _, j in ipairs(job) do
@@ -206,7 +206,7 @@ function OX:doesRequiredJobsExist(requiredJobs, needed)
             goto next
         end
 
-        -- ox_core は複数グループに所属できるので job ではなく groups 全体で見る
+        -- ox_core allows several groups, so check all of groups rather than job
         ---@type table<string, integer>
         local groups = ox_core:CallPlayer(playerData.source, "getGroups") or {}
 
@@ -226,7 +226,7 @@ function OX:doesRequiredJobsExist(requiredJobs, needed)
                     end
                 end
 
-                -- check onDuty (activeGroup が一致していれば勤務中)
+                -- check onDuty (on duty when activeGroup matches)
                 if requiredJobInfo.onDutyOnly == true and playerData?.job?.name == key and playerData?.job?.onduty == true then
                     checkJobDuty = true
                 elseif requiredJobInfo.onDutyOnly == false then
