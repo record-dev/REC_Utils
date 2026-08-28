@@ -100,6 +100,67 @@ function ESX:getCitizenIdByPlayerId(playerId)
 end
 
 ---[[
+--- ESX account names mapped onto the shared currency kinds
+---]]
+---@type table<string, REC_Utils.Server.Modules.Framework.MoneyTypes>
+local accountNameToMoneyType = {
+    money = "cash",
+    bank = "bank",
+    black_money = "black_money",
+}
+
+---[[
+--- Get every currency the player holds
+--- ESX keeps them as accounts, so the account name is renamed to the shared kind
+---]]
+function ESX:getMoneys(playerId)
+
+    ---@type table|nil
+    local xPlayer = esx.GetPlayerFromId(playerId)
+
+    -- exists check
+    if xPlayer == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return nil
+    end
+
+    ---@type { name: string, money: integer, }[]|nil
+    local accounts = xPlayer.accounts
+    if accounts == nil then
+        return nil
+    end
+
+    ---@type table<REC_Utils.Server.Modules.Framework.MoneyTypes, integer>
+    local moneys = {}
+    for _, account in pairs(accounts) do
+
+        local moneyType = accountNameToMoneyType[account.name]
+        if moneyType == nil then
+            goto continue
+        end
+
+        moneys[moneyType] = account.money or 0
+
+        ::continue::
+    end
+
+    return moneys
+end
+
+---[[
+--- Get one currency the player holds
+---]]
+function ESX:getMoney(playerId, moneyType)
+
+    local moneys = self:getMoneys(playerId)
+    if moneys == nil then
+        return nil
+    end
+
+    return moneys[moneyType]
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function ESX:hasJob(playerId, job, grades, onDutyOnly)

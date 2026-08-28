@@ -126,6 +126,47 @@ function OX:getCitizenIdByPlayerId(playerId)
 end
 
 ---[[
+--- DO NOT TOUCH
+--- warn only on the first call so a sampling loop cannot flood the console
+---]]
+---@type boolean
+local warnedAboutMoneys = false
+
+---[[
+--- Get every currency the player holds
+--- ox_core keeps money outside the character object and the API differs per version,
+--- so fill this in against the ox_core build you run
+---]]
+function OX:getMoneys(playerId)
+
+    if warnedAboutMoneys == false then
+        warnedAboutMoneys = true
+        print("^3getMoneys is not implemented for ox_core. implement it in REC_Utils/server/modules/_framework/ox.lua^0")
+    end
+
+    -- resolve the accounts of the character behind playerId and return them in the shape below
+    -- return {
+    --     cash = 0,
+    --     bank = 0,
+    -- }
+
+    return nil
+end
+
+---[[
+--- Get one currency the player holds
+---]]
+function OX:getMoney(playerId, moneyType)
+
+    local moneys = self:getMoneys(playerId)
+    if moneys == nil then
+        return nil
+    end
+
+    return moneys[moneyType]
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function OX:hasJob(playerId, job, grades, onDutyOnly)

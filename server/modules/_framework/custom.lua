@@ -75,6 +75,36 @@ function CUSTOM:getCitizenIdByPlayerId(playerId)
 end
 
 ---[[
+--- Get every currency the player holds
+--- return only the kinds your framework actually has, callers read them with `or 0`
+---]]
+function CUSTOM:getMoneys(playerId)
+
+    -- fetch the balances from your framework here and return them in the shape below
+    -- return {
+    --     cash = 0,
+    --     bank = 0,
+    --     black_money = 0,
+    --     crypto = 0,
+    -- }
+
+    return nil
+end
+
+---[[
+--- Get one currency the player holds
+---]]
+function CUSTOM:getMoney(playerId, moneyType)
+
+    local moneys = self:getMoneys(playerId)
+    if moneys == nil then
+        return nil
+    end
+
+    return moneys[moneyType]
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function CUSTOM:hasJob(playerId, job, grades, onDutyOnly)

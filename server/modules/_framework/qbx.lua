@@ -97,6 +97,50 @@ function QBOX:getCitizenIdByPlayerId(playerId)
 end
 
 ---[[
+--- Get every currency the player holds
+--- qbx already names its keys cash / bank / crypto, so they pass through as-is
+---]]
+function QBOX:getMoneys(playerId)
+
+    ---@type table
+    local player = qbx_core:GetPlayer(playerId)
+
+    -- exists check
+    if player == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return nil
+    end
+
+    local money = player.PlayerData?.money
+    if money == nil then
+        return nil
+    end
+
+    ---@type table<REC_Utils.Server.Modules.Framework.MoneyTypes, integer>
+    local moneys = {}
+    for moneyType, amount in pairs(money) do
+        if type(amount) == "number" then
+            moneys[moneyType] = amount
+        end
+    end
+
+    return moneys
+end
+
+---[[
+--- Get one currency the player holds
+---]]
+function QBOX:getMoney(playerId, moneyType)
+
+    local moneys = self:getMoneys(playerId)
+    if moneys == nil then
+        return nil
+    end
+
+    return moneys[moneyType]
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function QBOX:hasJob(playerId, job, grades, onDutyOnly)

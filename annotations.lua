@@ -42,6 +42,8 @@
 ---@field getPlayers fun(self: REC_Utils.Server.Modules.Framework,  ): REC_Utils.Server.Modules.Framework.GetPlayers.Return[]
 ---@field getPlayerData fun(self: REC_Utils.Server.Modules.Framework, playerId: integer): REC_Utils.Server.Modules.Framework.GetPlayers.Return.PlayerData|nil
 ---@field getCitizenIdByPlayerId fun(self: REC_Utils.Server.Modules.Framework, playerId: integer): string|nil
+---@field getMoneys fun(self: REC_Utils.Server.Modules.Framework, playerId: integer): table<REC_Utils.Server.Modules.Framework.MoneyTypes, integer>|nil
+---@field getMoney fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, moneyType: REC_Utils.Server.Modules.Framework.MoneyTypes, ): integer|nil
 ---@field hasJob fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, job: string|string[], grades?: table<integer, true>, onDutyOnly: boolean, ): boolean
 ---@field getJobs fun(self: REC_Utils.Server.Modules.Framework): table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
 ---@field doesRequiredJobsExist fun(self: REC_Utils.Server.Modules.Framework, requiredJobs: table<string, REC_Utils.Server.Modules.Framework.DoesRequiredJobsExist.Args.Job>, needed: integer): boolean
@@ -76,6 +78,12 @@
 ---@field label string
 ---@field type? string
 ---@
+
+---[[
+---     Currency kinds normalized across frameworks
+---     getMoneys only returns the kinds the framework actually holds, so read with `or 0`
+---]]
+---@alias REC_Utils.Server.Modules.Framework.MoneyTypes "cash" | "bank" | "black_money" | "crypto"
 
 ---@class REC_Utils.Server.Modules.Inventory
 ---@field items fun(self: REC_Utils.Server.Modules.Inventory, name?: string): REC_Utils.Server.Modules.Inventory.Items.Return|nil
