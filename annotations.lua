@@ -49,6 +49,7 @@
 ---@field doesRequiredJobsExist fun(self: REC_Utils.Server.Modules.Framework, requiredJobs: table<string, REC_Utils.Server.Modules.Framework.DoesRequiredJobsExist.Args.Job>, needed: integer): boolean
 ---@field setOnPlayerLoaded fun(self: REC_Utils.Server.Modules.Framework, onPlayerLoaded: fun(playerId: integer, ) )
 ---@field setOnPlayerUnLoaded fun(self: REC_Utils.Server.Modules.Framework, onPlayerUnLoaded: fun(playerId: integer, ) )
+---@field setOnMoneyChange fun(self: REC_Utils.Server.Modules.Framework, onMoneyChange: REC_Utils.Server.Modules.Framework.OnMoneyChange )
 
 ---@class REC_Utils.Server.Modules.Framework.GetPlayers.Return
 ---@field PlayerData REC_Utils.Server.Modules.Framework.GetPlayers.Return.PlayerData
@@ -84,6 +85,21 @@
 ---     getMoneys only returns the kinds the framework actually holds, so read with `or 0`
 ---]]
 ---@alias REC_Utils.Server.Modules.Framework.MoneyTypes "cash" | "bank" | "black_money" | "crypto"
+
+---[[
+---     One money movement, normalized across frameworks
+---     amount is always positive, the direction is carried by isRemove.
+---     reason is whatever the calling resource passed, so it doubles as the
+---     faucet / sink label an economy tracker groups by.
+---]]
+---@class REC_Utils.Server.Modules.Framework.MoneyChange
+---@field source integer
+---@field moneyType REC_Utils.Server.Modules.Framework.MoneyTypes
+---@field amount integer
+---@field isRemove boolean
+---@field reason string
+
+---@alias REC_Utils.Server.Modules.Framework.OnMoneyChange fun(change: REC_Utils.Server.Modules.Framework.MoneyChange)
 
 ---@class REC_Utils.Server.Modules.Inventory
 ---@field items fun(self: REC_Utils.Server.Modules.Inventory, name?: string): REC_Utils.Server.Modules.Inventory.Items.Return|nil

@@ -307,4 +307,14 @@ function OX:setOnPlayerUnLoaded(onPlayerUnLoaded)
     end)
 end
 
+---[[
+---     ox_core has no global money movement event
+---     Cash is an ox_inventory item and bank balances live in the accounts table,
+---     so nothing generic can be hooked here. Wire your own emitter and call the
+---     handler from it when you need the flow figures on ox.
+---]]
+function OX:setOnMoneyChange(onMoneyChange)
+    print("^3[REC_Utils] ox_core exposes no money change event, flow tracking stays empty^0")
+end
+
 return OX

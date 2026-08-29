@@ -259,4 +259,36 @@ function QBOX:setOnPlayerUnLoaded(onPlayerUnLoaded)
     end)
 end
 
+---[[
+---     qbx emits (source, moneyType, amount, actionType, reason)
+---     actionType "set" carries the new balance rather than a delta and the event
+---     does not pass the difference, so it cannot be turned into a movement.
+---]]
+function QBOX:setOnMoneyChange(onMoneyChange)
+
+    ---@param src integer
+    ---@param moneyType REC_Utils.Server.Modules.Framework.MoneyTypes
+    ---@param amount integer
+    ---@param actionType "add" | "remove" | "set"
+    ---@param reason? string
+    AddEventHandler("QBCore:Server:OnMoneyChange", function (src, moneyType, amount, actionType, reason)
+
+        if actionType ~= "add" and actionType ~= "remove" then
+            return
+        end
+
+        if type(amount) ~= "number" or amount == 0 then
+            return
+        end
+
+        onMoneyChange({
+            source = src,
+            moneyType = moneyType,
+            amount = math.abs(amount),
+            isRemove = actionType == "remove",
+            reason = type(reason) == "string" and reason ~= "" and reason or "unknown",
+        })
+    end)
+end
+
 return QBOX

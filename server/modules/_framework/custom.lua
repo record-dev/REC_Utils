@@ -234,4 +234,12 @@ function CUSTOM:setOnPlayerUnLoaded(onPlayerUnLoaded)
     -- end)
 end
 
+---[[
+---     Point this at whatever your framework emits
+---     The handler expects a normalized change, see the MoneyChange class in annotations.lua.
+---]]
+function CUSTOM:setOnMoneyChange(onMoneyChange)
+    print("^3[REC_Utils] custom framework has no money change hook wired up, flow tracking stays empty^0")
+end
+
 return CUSTOM

@@ -294,4 +294,46 @@ function ESX:setOnPlayerUnLoaded(onPlayerUnLoaded)
     end)
 end
 
+---[[
+---     ESX has no single money event, so both sides are wired up
+---     Account names are mapped onto the shared kinds ("money" -> "cash").
+---     Event names differ between ESX builds: check yours if nothing arrives.
+---]]
+function ESX:setOnMoneyChange(onMoneyChange)
+
+    ---@type table<string, REC_Utils.Server.Modules.Framework.MoneyTypes>
+    local accountMapping = {
+        money = "cash",
+        bank = "bank",
+        black_money = "black_money",
+    }
+
+    ---@param isRemove boolean
+    ---@return fun(src: integer, account: string, amount: integer, reason?: string)
+    local function handler(isRemove)
+        return function (src, account, amount, reason)
+
+            local moneyType = accountMapping[account]
+            if moneyType == nil then
+                return
+            end
+
+            if type(amount) ~= "number" or amount == 0 then
+                return
+            end
+
+            onMoneyChange({
+                source = src,
+                moneyType = moneyType,
+                amount = math.abs(amount),
+                isRemove = isRemove,
+                reason = type(reason) == "string" and reason ~= "" and reason or "unknown",
+            })
+        end
+    end
+
+    AddEventHandler("esx:addAccountMoney", handler(false))
+    AddEventHandler("esx:removeAccountMoney", handler(true))
+end
+
 return ESX
