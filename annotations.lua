@@ -46,6 +46,9 @@
 ---@field getMoney fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, moneyType: REC_Utils.Server.Modules.Framework.MoneyTypes, ): integer|nil
 ---@field hasJob fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, job: string|string[], grades?: table<integer, true>, onDutyOnly: boolean, ): boolean
 ---@field getJobs fun(self: REC_Utils.Server.Modules.Framework): table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
+---@field getResourceName fun(self: REC_Utils.Server.Modules.Framework): string|nil resource the adapter calls into, nil when it cannot be named
+---@field isReady fun(self: REC_Utils.Server.Modules.Framework): boolean whether that resource has started
+---@field waitUntilReady fun(self: REC_Utils.Server.Modules.Framework, timeoutMs?: integer): boolean blocks until it has, false on timeout
 ---@field doesRequiredJobsExist fun(self: REC_Utils.Server.Modules.Framework, requiredJobs: table<string, REC_Utils.Server.Modules.Framework.DoesRequiredJobsExist.Args.Job>, needed: integer): boolean
 ---@field setOnPlayerLoaded fun(self: REC_Utils.Server.Modules.Framework, onPlayerLoaded: fun(playerId: integer, ) )
 ---@field setOnPlayerUnLoaded fun(self: REC_Utils.Server.Modules.Framework, onPlayerUnLoaded: fun(playerId: integer, ) )

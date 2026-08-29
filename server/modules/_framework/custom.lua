@@ -9,6 +9,8 @@ local shApi = require "@REC_Library.shared.sh_api"
 local apiShCfg = shApi.Config
 local framework = apiShCfg.framework
 
+local ready = require "@REC_Utils.server.modules._framework._ready"
+
 local apiShEnums = shApi.Enums
 local frameworkTypes = apiShEnums.FrameworkTypes
 
@@ -19,6 +21,8 @@ end
 ---@type REC_Utils.Server.Modules.Framework
 ---@diagnostic disable-next-line: missing-fields
 local CUSTOM = {}
+
+CUSTOM.getResourceName, CUSTOM.isReady, CUSTOM.waitUntilReady = ready(nil)
 
 ---[[
 --- Get all players
