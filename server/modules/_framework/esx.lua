@@ -336,4 +336,28 @@ function ESX:setOnMoneyChange(onMoneyChange)
     AddEventHandler("esx:removeAccountMoney", handler(true))
 end
 
+
+---[[
+---     Character table layout
+---     last_seen only exists on newer ESX Legacy builds, so the caller has to survive
+---     the filtered query being rejected and fall back to counting every row.
+---]]
+function ESX:characterSchema()
+    return {
+        table = "users",
+        citizenIdColumn = "identifier",
+        inventoryColumn = "inventory",
+        lastLoginColumn = "last_seen",
+        nameColumns = { "firstname", "lastname", },
+    }
+end
+
+---[[
+---     ESX keeps no item columns on owned_vehicles
+---     That storage belongs to the inventory resource, so the stash pass picks it up.
+---]]
+function ESX:vehicleSchema()
+    return nil
+end
+
 return ESX

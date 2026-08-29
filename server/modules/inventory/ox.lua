@@ -82,4 +82,74 @@ function OX_INVENTORY:clearInventory(inv, keep)
     return ox_inventory:ClearInventory(inv, keep)
 end
 
+---[[
+---     Where the stored stashes live, for resources that count items across the server
+---     ox_inventory keeps player inventories in this table too once the framework
+---     stops writing them onto the character row.
+---]]
+function OX_INVENTORY:stashSchema()
+    return {
+        table = "ox_inventory",
+        nameColumn = "name",
+        ownerColumn = "owner",
+        dataColumn = "data",
+        updatedColumn = "lastupdated",
+    }
+end
+
+---[[
+---     Resource and directory the item sprites are shipped in
+---]]
+function OX_INVENTORY:imageSource()
+    return {
+        resource = "ox_inventory",
+        dir = "web/images",
+    }
+end
+
+---[[
+---     Item name -> sprite file, for items that override the default <name>.png
+---     client.image is stripped from the server side item list, so the data files
+---     are read directly.
+---]]
+function OX_INVENTORY:itemImages()
+
+    ---@type table<string, string>
+    local images = {}
+
+    ---@param name string
+    ---@param item { client?: { image?: string } }
+    local function store(name, item)
+        if type(item) ~= "table" then
+            return
+        end
+
+        local image = item.client?.image
+        if image ~= nil then
+            images[name] = image
+        end
+    end
+
+    local itemsSuccess, items = pcall(require, "@ox_inventory.data.items")
+    if itemsSuccess == true and type(items) == "table" then
+        for name, item in pairs(items) do
+            store(name, item)
+        end
+    end
+
+    -- weapons are nested per Weapons / Ammo / Components / Tints category
+    local weaponsSuccess, weapons = pcall(require, "@ox_inventory.data.weapons")
+    if weaponsSuccess == true and type(weapons) == "table" then
+        for _, category in pairs(weapons) do
+            if type(category) == "table" then
+                for name, item in pairs(category) do
+                    store(name, item)
+                end
+            end
+        end
+    end
+
+    return images
+end
+
 return OX_INVENTORY

@@ -141,4 +141,52 @@ function QB_INVENTORY:clearInventory(inv)
     return qb_inventory:ClearStash(inv)
 end
 
+---[[
+---     Stash storage, for resources that count items across the server
+---]]
+function QB_INVENTORY:stashSchema()
+
+    -- Not verified against a running qb-inventory, and the forks disagree on where
+    -- stashes live, so it stays off rather than counting the wrong table. Describe
+    -- your install here, then enable it.
+    -- return {
+    --     table = "",
+    --     nameColumn = "",
+    --     ownerColumn = "",
+    --     dataColumn = "",
+    --     updatedColumn = nil,
+    -- }
+
+    return nil
+end
+
+function QB_INVENTORY:imageSource()
+    return {
+        resource = "qb-inventory",
+        dir = "html/images",
+    }
+end
+
+---[[
+---     qb keeps the sprite name on the shared item itself
+---]]
+function QB_INVENTORY:itemImages()
+
+    ---@type table<string, string>
+    local images = {}
+
+    local items = self:items()
+    if type(items) ~= "table" then
+        return images
+    end
+
+    for name, item in pairs(items) do
+        if type(item) == "table" and type(item.image) == "string" then
+            images[name] = item.image
+        end
+    end
+
+    return images
+end
+
 return QB_INVENTORY

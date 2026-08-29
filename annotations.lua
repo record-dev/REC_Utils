@@ -50,6 +50,8 @@
 ---@field setOnPlayerLoaded fun(self: REC_Utils.Server.Modules.Framework, onPlayerLoaded: fun(playerId: integer, ) )
 ---@field setOnPlayerUnLoaded fun(self: REC_Utils.Server.Modules.Framework, onPlayerUnLoaded: fun(playerId: integer, ) )
 ---@field setOnMoneyChange fun(self: REC_Utils.Server.Modules.Framework, onMoneyChange: REC_Utils.Server.Modules.Framework.OnMoneyChange )
+---@field characterSchema fun(self: REC_Utils.Server.Modules.Framework): REC_Utils.Server.Modules.Framework.CharacterSchema|nil
+---@field vehicleSchema fun(self: REC_Utils.Server.Modules.Framework): REC_Utils.Server.Modules.Framework.VehicleSchema|nil
 
 ---@class REC_Utils.Server.Modules.Framework.GetPlayers.Return
 ---@field PlayerData REC_Utils.Server.Modules.Framework.GetPlayers.Return.PlayerData
@@ -113,6 +115,34 @@
 ---@field registerStash fun(self: REC_Utils.Server.Modules.Inventory, id: integer|string, label: string, slots: integer, maxWeight: integer, owner?: string|boolean, groups?: { [string]: integer, }[], coords?: vector3|vector3[] ): boolean
 ---@field createTemporaryStash fun(self: REC_Utils.Server.Modules.Inventory, properties: REC_Utils.Server.Modules.Inventory.CreateTemporaryStash.Args.Properties, ): string
 ---@field clearInventory fun(self: REC_Utils.Server.Modules.Inventory, id: integer|string, keep?: string|string[] )
+---@field stashSchema fun(self: REC_Utils.Server.Modules.Inventory): REC_Utils.Server.Modules.Inventory.StashSchema|nil
+---@field imageSource fun(self: REC_Utils.Server.Modules.Inventory): REC_Utils.Server.Modules.Inventory.ImageSource|nil
+---@field itemImages fun(self: REC_Utils.Server.Modules.Inventory): table<string, string>
+
+---@class REC_Utils.Server.Modules.Inventory.ImageSource
+---@field resource string
+---@field dir string
+
+---@class REC_Utils.Server.Modules.Framework.CharacterSchema
+---@field table string
+---@field citizenIdColumn string
+---@field inventoryColumn? string nil when the inventory resource owns the storage
+---@field lastLoginColumn? string nil counts every row
+---@field nameColumns? string[] plain columns joined with a space
+---@field nameJsonColumn? string one JSON column...
+---@field nameJsonKeys? string[] ...and the keys to read out of it
+
+---@class REC_Utils.Server.Modules.Framework.VehicleSchema
+---@field table string
+---@field citizenIdColumn string
+---@field itemColumns string[] columns holding a JSON item array
+
+---@class REC_Utils.Server.Modules.Inventory.StashSchema
+---@field table string
+---@field nameColumn string
+---@field ownerColumn string
+---@field dataColumn string
+---@field updatedColumn? string
 
 ---@class REC_Utils.Server.Modules.Inventory.Items.Return
 ---@field name string

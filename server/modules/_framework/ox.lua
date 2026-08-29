@@ -317,4 +317,34 @@ function OX:setOnMoneyChange(onMoneyChange)
     print("^3[REC_Utils] ox_core exposes no money change event, flow tracking stays empty^0")
 end
 
+
+---[[
+---     Character table layout
+---     ox_core keeps its character rows in a schema of its own and hands the item
+---     storage to ox_inventory.
+---]]
+function OX:characterSchema()
+
+    -- Not verified against a running ox_core, so it stays off rather than counting
+    -- the wrong table. Check the column names against your build, then enable it.
+    -- return {
+    --     table = "characters",
+    --     citizenIdColumn = "stateId",
+    --     -- ox_inventory owns the item storage, so the stash pass covers it
+    --     inventoryColumn = nil,
+    --     lastLoginColumn = "lastPlayed",
+    --     nameColumns = { "firstName", "lastName", },
+    -- }
+
+    return nil
+end
+
+---[[
+---     ox_core keeps no item columns on its vehicle rows
+---     That storage belongs to ox_inventory, so the stash pass picks it up.
+---]]
+function OX:vehicleSchema()
+    return nil
+end
+
 return OX

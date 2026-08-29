@@ -242,4 +242,46 @@ function CUSTOM:setOnMoneyChange(onMoneyChange)
     print("^3[REC_Utils] custom framework has no money change hook wired up, flow tracking stays empty^0")
 end
 
+
+---[[
+---     Character table layout
+---     Read by resources that count items or money across every character, online or
+---     not. Fill it in for your own framework, the same as the methods above.
+---]]
+function CUSTOM:characterSchema()
+
+    -- describe the table one row per character lives in
+    -- return {
+    --     table = "players",
+    --     citizenIdColumn = "citizenid",
+    --     -- carried inventory as a JSON array, nil when the inventory resource
+    --     -- keeps it in a table of its own (ox_inventory does)
+    --     inventoryColumn = "inventory",
+    --     -- nil counts every row instead of only the recent logins
+    --     lastLoginColumn = "last_logged_out",
+    --     -- either plain columns joined with a space...
+    --     nameColumns = { "firstname", "lastname", },
+    --     -- ...or one JSON column and the keys to read out of it
+    --     nameJsonColumn = "charinfo",
+    --     nameJsonKeys = { "firstname", "lastname", },
+    -- }
+
+    return nil
+end
+
+---[[
+---     Owned vehicles, when the framework keeps the storage on the vehicle row
+---]]
+function CUSTOM:vehicleSchema()
+
+    -- leave it nil when the inventory resource owns the vehicle storage
+    -- return {
+    --     table = "player_vehicles",
+    --     citizenIdColumn = "citizenid",
+    --     itemColumns = { "glovebox", "trunk", },
+    -- }
+
+    return nil
+end
+
 return CUSTOM

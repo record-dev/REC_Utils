@@ -291,4 +291,32 @@ function QBOX:setOnMoneyChange(onMoneyChange)
     end)
 end
 
+
+---[[
+---     Character table layout
+---     Read by resources that count items or money across every character, online or
+---     not. nil when this framework keeps no table worth walking.
+---]]
+function QBOX:characterSchema()
+    return {
+        table = "players",
+        citizenIdColumn = "citizenid",
+        inventoryColumn = "inventory",
+        lastLoginColumn = "last_logged_out",
+        nameJsonColumn = "charinfo",
+        nameJsonKeys = { "firstname", "lastname", },
+    }
+end
+
+---[[
+---     Owned vehicles, when the framework keeps the storage on the vehicle row
+---]]
+function QBOX:vehicleSchema()
+    return {
+        table = "player_vehicles",
+        citizenIdColumn = "citizenid",
+        itemColumns = { "glovebox", "trunk", },
+    }
+end
+
 return QBOX
