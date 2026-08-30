@@ -261,6 +261,15 @@ function CUSTOM:characterSchema()
     --     -- carried inventory as a JSON array, nil when the inventory resource
     --     -- keeps it in a table of its own (ox_inventory does)
     --     inventoryColumn = "inventory",
+    --     -- balances as a JSON object, nil when the framework keeps no such column
+    --     moneyColumn = "money",
+    --     -- <key inside moneyColumn> = <shared money kind>
+    --     moneyKeys = {
+    --         cash = "cash",
+    --         bank = "bank",
+    --         black_money = "black_money",
+    --         crypto = "crypto",
+    --     },
     --     -- nil counts every row instead of only the recent logins
     --     lastLoginColumn = "last_logged_out",
     --     -- either plain columns joined with a space...

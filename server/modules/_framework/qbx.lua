@@ -306,6 +306,13 @@ function QBOX:characterSchema()
         table = "players",
         citizenIdColumn = "citizenid",
         inventoryColumn = "inventory",
+        moneyColumn = "money",
+        moneyKeys = {
+            cash = "cash",
+            bank = "bank",
+            black_money = "black_money",
+            crypto = "crypto",
+        },
         lastLoginColumn = "last_logged_out",
         nameJsonColumn = "charinfo",
         nameJsonKeys = { "firstname", "lastname", },

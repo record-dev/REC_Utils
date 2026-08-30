@@ -130,6 +130,8 @@
 ---@field table string
 ---@field citizenIdColumn string
 ---@field inventoryColumn? string nil when the inventory resource owns the storage
+---@field moneyColumn? string JSON column holding the balances, nil when the framework keeps none
+---@field moneyKeys? table<string, REC_Utils.Server.Modules.Framework.MoneyTypes> key inside moneyColumn = money kind
 ---@field lastLoginColumn? string nil counts every row
 ---@field nameColumns? string[] plain columns joined with a space
 ---@field nameJsonColumn? string one JSON column...

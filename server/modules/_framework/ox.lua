@@ -336,6 +336,9 @@ function OX:characterSchema()
     --     citizenIdColumn = "stateId",
     --     -- ox_inventory owns the item storage, so the stash pass covers it
     --     inventoryColumn = nil,
+    --     -- ox_core keeps cash as an ox_inventory item rather than a column
+    --     moneyColumn = nil,
+    --     moneyKeys = nil,
     --     lastLoginColumn = "lastPlayed",
     --     nameColumns = { "firstName", "lastName", },
     -- }

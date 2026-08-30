@@ -351,6 +351,8 @@ function ESX:characterSchema()
         table = "users",
         citizenIdColumn = "identifier",
         inventoryColumn = "inventory",
+        moneyColumn = "accounts",
+        moneyKeys = accountNameToMoneyType,
         lastLoginColumn = "last_seen",
         nameColumns = { "firstname", "lastname", },
     }
