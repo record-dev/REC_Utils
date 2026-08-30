@@ -22,14 +22,22 @@ function ESX_BANKING:getAccount(society)
     TriggerEvent("esx_society:getSociety", society, function(data)
         if data == nil then
             p:resolve(0)
-        else
-            TriggerEvent("esx_addonaccount:getSharedAccount", data.account, function(account)
-                p:resolve(account.money)
-            end)
+            return
         end
+
+        TriggerEvent("esx_addonaccount:getSharedAccount", data.account, function(account)
+            if account == nil then
+                p:resolve(0)
+                return
+            end
+
+            p:resolve(account.money or 0)
+        end)
     end)
 
-    return Citizen.Await(p)
+    return {
+        money = Citizen.Await(p),
+    }
 end
 
 return ESX_BANKING

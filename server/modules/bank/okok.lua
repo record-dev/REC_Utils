@@ -18,9 +18,23 @@ local okok_Banking = exports.okokBanking
 local OKOK_BANKING = {}
 
 function OKOK_BANKING:getAccount(society)
-    local acount = okok_Banking:GetAccount(society)
+    local account = okok_Banking:GetAccount(society)
+
+    -- okokBanking returns the balance itself
+    if type(account) == "number" then
+        return {
+            money = account,
+        }
+    end
+
+    if type(account) ~= "table" then
+        return {
+            money = 0,
+        }
+    end
+
     return {
-        money = acount.value or acount.money or 0,
+        money = account.value or account.money or 0,
     }
 end
 

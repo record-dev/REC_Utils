@@ -18,7 +18,9 @@ local qb_Banking = exports["qb-banking"]
 local QB_BANKING = {}
 
 function QB_BANKING:getAccount(society)
-    return qb_Banking:GetAccountBalance(society)
+    return {
+        money = qb_Banking:GetAccountBalance(society) or 0,
+    }
 end
 
 return QB_BANKING

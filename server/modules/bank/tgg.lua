@@ -18,7 +18,9 @@ local tgg_Banking = exports["tgg-banking"]
 local TGG_BANKING = {}
 
 function TGG_BANKING:getAccount(society)
-    return tgg_Banking:GetSocietyAccountMoney(society)
+    return {
+        money = tgg_Banking:GetSocietyAccountMoney(society) or 0,
+    }
 end
 
 return TGG_BANKING
