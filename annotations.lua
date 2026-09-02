@@ -8,6 +8,7 @@
 ---@class REC_Utils.Client.Modules.Inventory
 ---@field items fun(self: REC_Utils.Client.Modules.Inventory, name?: string): REC_Utils.Client.Modules.Inventory.Items.Return|nil
 ---@field getItemCount fun(self: REC_Utils.Client.Modules.Inventory, item: string, ): integer
+---@field setIsBusy fun(self: REC_Utils.Client.Modules.Inventory, isBusy: boolean, ): boolean
 
 ---@class REC_Utils.Client.Modules.Inventory.Items.Return
 ---@field name string

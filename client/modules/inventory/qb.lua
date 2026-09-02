@@ -36,4 +36,13 @@ function QB_INVENTORY:getItemCount(item)
     error("getItemCount is not supported in qb-inventory, use items() instead to get the item and its count.")
 end
 
+function QB_INVENTORY:setIsBusy(isBusy)
+    if isBusy == nil or type(isBusy) ~= "boolean" then
+        return false
+    end
+
+    LocalPlayer.state:set("inv_busy", isBusy, true)
+    return true
+end
+
 return QB_INVENTORY

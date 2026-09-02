@@ -25,4 +25,14 @@ function OX_INVENTORY:getItemCount(item)
     return ox_inventory:GetItemCount(item)
 end
 
+function OX_INVENTORY:setIsBusy(isBusy)
+    if isBusy == nil or type(isBusy) ~= "boolean" then
+        return false
+    end
+
+    -- https://overextended.dev/docs/ox_inventory/Functions/Client#invbusy
+    LocalPlayer.state.invBusy = isBusy
+    return true
+end
+
 return OX_INVENTORY

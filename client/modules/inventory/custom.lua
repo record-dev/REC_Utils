@@ -23,4 +23,12 @@ function CUSTOM_INVENTORY:getItemCount(item)
     return 0
 end
 
+function CUSTOM_INVENTORY:setIsBusy(isBusy)
+    if isBusy == nil or type(isBusy) ~= "boolean" then
+        return false
+    end
+
+    return false
+end
+
 return CUSTOM_INVENTORY
