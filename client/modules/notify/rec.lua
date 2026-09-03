@@ -11,7 +11,7 @@ if notify ~= notifyTypes.rec then
     return
 end
 
-local recNotify = exports.REC_Notify
+local recNotify = exports.REC_Hud
 
 ---@type REC_Utils.Client.Modules.Notify
 ---@diagnostic disable-next-line: missing-fields

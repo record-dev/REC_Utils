@@ -34,6 +34,9 @@
 ---@class REC_Utils.Client.Modules.Notify
 ---@field trigger fun(self: REC_Utils.Client.Modules.Notify, notifyType: "success" | "info" | "warning" | "error", titile: string, msg: string, duration?: integer, playSound: boolean, ): boolean
 
+---@class REC_Utils.Client.Modules.Status
+---@field get fun(self: REC_Utils.Client.Modules.Status, name: "hunger" | "thirst" | "stress", ): number|nil # 0 to 100, 100 is full (stress 100 is the worst), nil when the framework has no such status
+
 ---@class REC_Utils.Server.Modules.Framework.DoesRequiredJobsExist.Args.Job
 ---@field ranks table<integer, true>
 ---@field onDutyOnly boolean

@@ -39,6 +39,9 @@ local api = {
     ---@type REC_Utils.Client.Modules.Notify
     Notify = require ("@REC_Utils.client.modules.notify." .. apiShCfg.notify),
 
+    ---@type REC_Utils.Client.Modules.Status
+    Status = require ("@REC_Utils.client.modules.status." .. apiShCfg.framework),
+
     ---@type REC_Utils.Client.Modules.Raycast
     Raycast = require "@REC_Utils.client.modules.raycast",
 
