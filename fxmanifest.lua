@@ -22,7 +22,7 @@ dependencies {
 }
 
 shared_script {
-    '@ox_lib/init.lua',
+    '@REC_Library/init.lua',
     'config/sh_config.lua',
     'locales/*.lua',
     'shared/*.lua',
