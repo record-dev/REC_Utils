@@ -11,19 +11,18 @@ if notify ~= notifyTypes.rec then
     return
 end
 
-local recNotify = exports.REC_Hud
-
 ---@type REC_Utils.Server.Modules.Notify
 ---@diagnostic disable-next-line: missing-fields
 local REC_NOTIFY = {}
 
 function REC_NOTIFY:trigger(playerId, notifyType, title, msg, duration, playSound)
-    recNotify:notify(playerId, {
-        type = notifyType,
-        title = title,
+    -- the REC_Notify toast, the sound per type comes from its config
+    exports.REC_Notify:notify(playerId, {
+        type        = notifyType,
+        title       = title,
         description = msg,
-        duration = duration,
-        playSound = playSound,
+        duration    = duration,
+        playSound   = playSound,
     })
     return true
 end
