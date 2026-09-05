@@ -16,7 +16,8 @@ end
 local OX_NOTIFY = {}
 
 function OX_NOTIFY:trigger(notifyType, title, msg, duration, playSound)
-    lib.notify({
+    -- ox_lib's own event, so this adapter still targets ox_lib and not the REC_Library toast
+    TriggerEvent("ox_lib:notify", {
         type = notifyType,
         title = title,
         description = msg,

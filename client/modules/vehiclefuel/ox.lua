@@ -11,10 +11,6 @@ if vehiclefuel ~= vehiclefuelTypes.ox then
     return
 end
 
----@class OxFuel.Cient.Fuel
----@field setFuel fun(self: OxFuel.Cient.Fuel, vehicle: integer, fuel: integer, )
-local ox_fuel = require "@ox_fuel.client.fuel"
-
 ---@type REC_Utils.Client.Modules.VehicleFuel
 ---@diagnostic disable-next-line: missing-fields
 local OX_FUEL = {}
@@ -24,9 +20,18 @@ function OX_FUEL:getFuel(vehicle)
     return vehState.fuel or GetVehicleFuelLevel(vehicle)
 end
 
+-- ox_fuel reads the fuel state bag, so writing it is enough and its client module never has to load here
 function OX_FUEL:setFuel(vehicle, fuel)
-    local vehState = Entity(vehicle).state
-    ox_fuel:setFuel(vehicle, fuel)
+
+    if DoesEntityExist(vehicle) == false then
+        return false
+    end
+
+    fuel = math.min(math.max(fuel + 0.0, 0.0), 100.0)
+
+    SetVehicleFuelLevel(vehicle, fuel)
+    Entity(vehicle).state:set("fuel", fuel, true)
+
     return true
 end
 
