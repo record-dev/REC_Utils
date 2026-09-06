@@ -13,6 +13,8 @@ local events = {
         testSpawnEntity = "",
 
         kill = "",
+
+        onPlayerLoaded = "",
     },
 
     server = {
