@@ -32,6 +32,11 @@ function QB_MEDICAL:kill(playerId)
     return true
 end
 
+function QB_MEDICAL:isLastStand(playerId)
+    -- no last stand state here, so always false
+    return false
+end
+
 function QB_MEDICAL:isDead(playerId)
     return 
 end

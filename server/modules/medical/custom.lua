@@ -32,6 +32,11 @@ function CUSTOM_MEDICAL:kill(playerId)
     return true
 end
 
+function CUSTOM_MEDICAL:isLastStand(playerId)
+    -- no last stand state here, so always false
+    return false
+end
+
 function CUSTOM_MEDICAL:isDead(playerId)
 
     -- exists check

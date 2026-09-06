@@ -34,6 +34,11 @@ function WSB_MEDICALV1:kill(playerId)
     return true
 end
 
+function WSB_MEDICALV1:isLastStand(playerId)
+    -- no last stand state here, so always false
+    return false
+end
+
 function WSB_MEDICALV1:isDead(playerId)
     return 
 end

@@ -197,6 +197,7 @@
 ---@class REC_Utils.Server.Modules.Medical
 ---@field revive fun(self: REC_Utils.Server.Modules.Medical, playerId: integer, ): boolean
 ---@field kill fun(self: REC_Utils.Server.Modules.Medical, playerId: integer, ): boolean
+---@field isLastStand fun(self: REC_Utils.Server.Modules.Medical, playerId: integer, ): boolean # first stage of the downed state, false on adapters without one
 ---@field isDead fun(self: REC_Utils.Server.Modules.Medical, playerId: integer, ): boolean
 
 ---@class REC_Utils.Server.Modules.Door

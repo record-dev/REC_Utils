@@ -34,6 +34,11 @@ function WSB_MEDICALV2:kill(playerId)
     return true
 end
 
+function WSB_MEDICALV2:isLastStand(playerId)
+    -- no last stand state here, so always false
+    return false
+end
+
 function WSB_MEDICALV2:isDead(playerId)
     return wasabi_ambulance_v2:isPlayerInDistress(playerId)
 end
