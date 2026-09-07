@@ -119,6 +119,21 @@ function REC:getMoney(playerId, moneyType)
 end
 
 ---[[
+--- Add money to one of the player's currencies
+--- REC_Core account names are whatever config.accounts says, they pass through as-is
+---]]
+function REC:addMoney(playerId, amount, moneyType)
+    return recCore:addMoney(playerId, moneyType or "bank", amount) == true
+end
+
+---[[
+--- Remove money from one of the player's currencies
+---]]
+function REC:removeMoney(playerId, amount, moneyType)
+    return recCore:removeMoney(playerId, moneyType or "bank", amount) == true
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function REC:hasJob(playerId, job, grades, onDutyOnly)

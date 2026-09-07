@@ -48,6 +48,8 @@
 ---@field getCitizenIdByPlayerId fun(self: REC_Utils.Server.Modules.Framework, playerId: integer): string|nil
 ---@field getMoneys fun(self: REC_Utils.Server.Modules.Framework, playerId: integer): table<REC_Utils.Server.Modules.Framework.MoneyTypes, integer>|nil
 ---@field getMoney fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, moneyType: REC_Utils.Server.Modules.Framework.MoneyTypes, ): integer|nil
+---@field addMoney fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, amount: integer, moneyType?: REC_Utils.Server.Modules.Framework.MoneyTypes, ): boolean moneyType defaults to "bank"
+---@field removeMoney fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, amount: integer, moneyType?: REC_Utils.Server.Modules.Framework.MoneyTypes, ): boolean moneyType defaults to "bank"
 ---@field hasJob fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, job: string|string[], grades?: table<integer, true>, onDutyOnly: boolean, ): boolean
 ---@field getJobs fun(self: REC_Utils.Server.Modules.Framework): table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
 ---@field getResourceName fun(self: REC_Utils.Server.Modules.Framework): string|nil resource the adapter calls into, nil when it cannot be named

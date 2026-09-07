@@ -71,6 +71,37 @@ function QB:getMoney(playerId, moneyType)
     return moneys[moneyType]
 end
 
+---[[
+--- Add money to one of the player's currencies
+--- qb-core already names its keys cash / bank / crypto, so moneyType passes through as-is
+---]]
+function QB:addMoney(playerId, amount, moneyType)
+
+    ---@type table
+    local player = exports["qb-core"]:GetCoreObject().Functions.GetPlayer(playerId)
+    if player == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    return player.Functions.AddMoney(moneyType or "bank", amount) == true
+end
+
+---[[
+--- Remove money from one of the player's currencies
+---]]
+function QB:removeMoney(playerId, amount, moneyType)
+
+    ---@type table
+    local player = exports["qb-core"]:GetCoreObject().Functions.GetPlayer(playerId)
+    if player == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    return player.Functions.RemoveMoney(moneyType or "bank", amount) == true
+end
+
 function QB:setOnPlayerLoaded(onPlayerLoaded)
     RegisterNetEvent("QBCore:Server:OnPlayerLoaded", function (...)
         local src = source

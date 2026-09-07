@@ -145,6 +145,37 @@ function QBOX:getMoney(playerId, moneyType)
 end
 
 ---[[
+--- Add money to one of the player's currencies
+--- qbx already names its keys cash / bank / crypto, so moneyType passes through as-is
+---]]
+function QBOX:addMoney(playerId, amount, moneyType)
+
+    ---@type table
+    local player = qbx_core:GetPlayer(playerId)
+    if player == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    return player.Functions.AddMoney(moneyType or "bank", amount) == true
+end
+
+---[[
+--- Remove money from one of the player's currencies
+---]]
+function QBOX:removeMoney(playerId, amount, moneyType)
+
+    ---@type table
+    local player = qbx_core:GetPlayer(playerId)
+    if player == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    return player.Functions.RemoveMoney(moneyType or "bank", amount) == true
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function QBOX:hasJob(playerId, job, grades, onDutyOnly)

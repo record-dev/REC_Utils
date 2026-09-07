@@ -109,6 +109,28 @@ function CUSTOM:getMoney(playerId, moneyType)
 end
 
 ---[[
+--- Add money to one of the player's currencies
+---]]
+function CUSTOM:addMoney(playerId, amount, moneyType)
+
+    -- credit the balance on your framework here
+    -- return true
+
+    return false
+end
+
+---[[
+--- Remove money from one of the player's currencies
+---]]
+function CUSTOM:removeMoney(playerId, amount, moneyType)
+
+    -- debit the balance on your framework here
+    -- return true
+
+    return false
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function CUSTOM:hasJob(playerId, job, grades, onDutyOnly)

@@ -165,6 +165,69 @@ function ESX:getMoney(playerId, moneyType)
 end
 
 ---[[
+--- shared currency kinds mapped back onto ESX account names
+---]]
+---@type table<REC_Utils.Server.Modules.Framework.MoneyTypes, string>
+local moneyTypeToAccountName = {
+    cash = "money",
+    bank = "bank",
+    black_money = "black_money",
+}
+
+---[[
+--- Add money to one of the player's currencies
+--- cash goes through addMoney, every other account through addAccountMoney
+---]]
+function ESX:addMoney(playerId, amount, moneyType)
+
+    ---@type table|nil
+    local xPlayer = esx.GetPlayerFromId(playerId)
+    if xPlayer == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    local accountName = moneyTypeToAccountName[moneyType or "bank"]
+    if accountName == nil then
+        return false
+    end
+
+    if accountName == "money" then
+        xPlayer.addMoney(amount)
+    else
+        xPlayer.addAccountMoney(accountName, amount)
+    end
+
+    return true
+end
+
+---[[
+--- Remove money from one of the player's currencies
+---]]
+function ESX:removeMoney(playerId, amount, moneyType)
+
+    ---@type table|nil
+    local xPlayer = esx.GetPlayerFromId(playerId)
+    if xPlayer == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    local accountName = moneyTypeToAccountName[moneyType or "bank"]
+    if accountName == nil then
+        return false
+    end
+
+    if accountName == "money" then
+        xPlayer.removeMoney(amount)
+    else
+        xPlayer.removeAccountMoney(accountName, amount)
+    end
+
+    return true
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function ESX:hasJob(playerId, job, grades, onDutyOnly)

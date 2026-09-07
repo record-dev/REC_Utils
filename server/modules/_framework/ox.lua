@@ -171,6 +171,58 @@ function OX:getMoney(playerId, moneyType)
 end
 
 ---[[
+--- DO NOT TOUCH
+--- warn only on the first call so a sampling loop cannot flood the console
+---]]
+---@type boolean
+local warnedAboutAddMoney = false
+
+---[[
+--- Add money to one of the player's currencies
+--- ox_core keeps money outside the character object and the API differs per version,
+--- so fill this in against the ox_core build you run
+---]]
+function OX:addMoney(playerId, amount, moneyType)
+
+    if warnedAboutAddMoney == false then
+        warnedAboutAddMoney = true
+        print("^3addMoney is not implemented for ox_core. implement it in REC_Utils/server/modules/_framework/ox.lua^0")
+    end
+
+    -- resolve the character behind playerId and credit the account here
+    -- local player = ox_core:GetPlayer(playerId)
+    -- player:addAccountMoney(moneyType or "bank", amount)
+    -- return true
+
+    return false
+end
+
+---[[
+--- DO NOT TOUCH
+--- warn only on the first call so a sampling loop cannot flood the console
+---]]
+---@type boolean
+local warnedAboutRemoveMoney = false
+
+---[[
+--- Remove money from one of the player's currencies
+---]]
+function OX:removeMoney(playerId, amount, moneyType)
+
+    if warnedAboutRemoveMoney == false then
+        warnedAboutRemoveMoney = true
+        print("^3removeMoney is not implemented for ox_core. implement it in REC_Utils/server/modules/_framework/ox.lua^0")
+    end
+
+    -- resolve the character behind playerId and debit the account here
+    -- local player = ox_core:GetPlayer(playerId)
+    -- player:removeAccountMoney(moneyType or "bank", amount)
+    -- return true
+
+    return false
+end
+
+---[[
 --- Check if you have a job
 ---]]
 function OX:hasJob(playerId, job, grades, onDutyOnly)
