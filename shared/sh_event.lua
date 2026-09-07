@@ -14,8 +14,6 @@ local events = {
 
         kill = "",
 
-        onPlayerLoaded = "",
-
         clothingOpenMenu = "",
 
         clothingLoadOutfit = "",

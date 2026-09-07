@@ -18,11 +18,3 @@ RegisterNetEvent(events.client.clothingLoadOutfit, function (clothingData)
         clUtilsApi.Clothing:setClothing(clothingData)
     end
 end)
-
----[[
----     Fires once for whichever framework is installed, so callers do not
----     need to know its player loaded event name.
----]]
-clUtilsApi.Framework:setOnPlayerLoaded(function ()
-    TriggerEvent(events.client.onPlayerLoaded)
-end)
