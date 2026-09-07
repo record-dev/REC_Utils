@@ -177,6 +177,33 @@ function CUSTOM:hasJob(playerId, job, grades, onDutyOnly)
 end
 
 ---[[
+--- Check if you are in a gang
+--- fill this in for your own framework, mirrors hasJob above
+---]]
+function CUSTOM:hasGang(playerId, gang, ranks)
+
+    -- fetch the player's gang from your framework and compare it the same way hasJob does
+    -- local playerGang = ...
+    -- return playerGang?.name == gang
+
+    return false
+end
+
+---[[
+--- Get all gangs
+---]]
+function CUSTOM:getGangs()
+
+    ---@type table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
+    local gangs = {}
+
+    -- fill in the gang list from your framework here
+    -- gangs["ballas"] = { label = "Ballas", type = "gang" }
+
+    return gangs
+end
+
+---[[
 --- Get all jobs
 ---]]
 function CUSTOM:getJobs()

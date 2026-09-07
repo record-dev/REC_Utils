@@ -52,6 +52,8 @@
 ---@field removeMoney fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, amount: integer, moneyType?: REC_Utils.Server.Modules.Framework.MoneyTypes, ): boolean moneyType defaults to "bank"
 ---@field hasJob fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, job: string|string[], grades?: table<integer, true>, onDutyOnly: boolean, ): boolean
 ---@field getJobs fun(self: REC_Utils.Server.Modules.Framework): table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
+---@field hasGang fun(self: REC_Utils.Server.Modules.Framework, playerId: integer, gang: string|string[], ranks?: table<integer, true>): boolean
+---@field getGangs fun(self: REC_Utils.Server.Modules.Framework): table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
 ---@field getResourceName fun(self: REC_Utils.Server.Modules.Framework): string|nil resource the adapter calls into, nil when it cannot be named
 ---@field isReady fun(self: REC_Utils.Server.Modules.Framework): boolean whether that resource has started
 ---@field waitUntilReady fun(self: REC_Utils.Server.Modules.Framework, timeoutMs?: integer): boolean blocks until it has, false on timeout

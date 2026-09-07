@@ -290,6 +290,64 @@ function OX:getJobs()
     return jobs
 end
 
+---[[
+--- Check if you are in a gang
+--- ox_core has no separate gang store, membership uses the same group table as jobs
+---]]
+function OX:hasGang(playerId, gang, ranks)
+
+    ---@type table<string, integer>|nil
+    local groups = ox_core:CallPlayer(playerId, "getGroups")
+    if groups == nil then
+        print(("^1failed to get groups... playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    local gangName, gangGrade = (function ()
+        if type(gang) == "table" then
+            for _, g in ipairs(gang) do
+                if groups[g] ~= nil then
+                    return g, groups[g]
+                end
+            end
+            return nil, nil
+        end
+        return gang, groups[gang]
+    end)()
+
+    if gangName == nil or gangGrade == nil then
+        return false
+    end
+
+    if ranks ~= nil then
+        if ranks[gangGrade] ~= true then
+            return false
+        end
+    end
+
+    return true
+end
+
+---[[
+--- Get all groups of gang type
+---]]
+function OX:getGangs()
+
+    ---@type table[]
+    local groups = ox_core:GetGroupsByType("gang") or {}
+
+    ---@type table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
+    local gangs = {}
+    for _, group in pairs(groups) do
+        gangs[group.name] = {
+            label = group.label,
+            type = group.type,
+        }
+    end
+
+    return gangs
+end
+
 function OX:doesRequiredJobsExist(requiredJobs, needed)
 
     local count = 0

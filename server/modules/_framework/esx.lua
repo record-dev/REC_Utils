@@ -276,6 +276,17 @@ end
 ---[[
 --- Get all jobs
 ---]]
+---[[
+--- ESX has no native gang concept, only jobs
+---]]
+function ESX:hasGang(playerId, gang, ranks)
+    return false
+end
+
+function ESX:getGangs()
+    return {}
+end
+
 function ESX:getJobs()
 
     ---@type table<string, table>

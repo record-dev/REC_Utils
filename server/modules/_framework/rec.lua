@@ -158,6 +158,31 @@ function REC:getJobs()
     return result
 end
 
+---[[
+--- Check if you are in a gang
+---]]
+function REC:hasGang(playerId, gang, ranks)
+    return recCore:hasGang(playerId, gang, ranks) == true
+end
+
+function REC:getGangs()
+
+    ---@type table<string, REC_Core.Shared.Groups.Label>
+    local gangs = recCore:getGangs() or {}
+
+    ---@type table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
+    local result = {}
+
+    for name, gang in pairs(gangs) do
+        result[name] = {
+            label = gang.label,
+            type = gang.type,
+        }
+    end
+
+    return result
+end
+
 function REC:doesRequiredJobsExist(requiredJobs, needed)
 
     local count = 0

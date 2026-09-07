@@ -28,6 +28,70 @@ function QB:doesRequiredJobsExist()
 end
 
 ---[[
+--- Check if you are in a gang
+--- qb-core keeps gang membership on PlayerData.gang, the same shape as job
+---]]
+function QB:hasGang(playerId, gang, ranks)
+
+    ---@type table
+    local player = exports["qb-core"]:GetCoreObject().Functions.GetPlayer(playerId)
+    if player == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    local playerGang = player.PlayerData?.gang
+
+    if type(gang) == "table" then
+
+        local gangFounded = false --[[@as boolean]]
+        for _, g in ipairs(gang) do
+            if playerGang?.name == g then
+                gangFounded = true
+                break
+            end
+        end
+
+        if gangFounded == false then
+            return false
+        end
+    else
+        if playerGang?.name ~= gang then
+            return false
+        end
+    end
+
+    if ranks ~= nil then
+        if ranks[playerGang?.grade.level] ~= true then
+            return false
+        end
+    end
+
+    return true
+end
+
+---[[
+--- qb-core keeps the gang list on Shared.Gangs, not an export
+---]]
+function QB:getGangs()
+
+    ---@type table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
+    local gangs = {}
+
+    ---@type table<string, table>|nil
+    local sharedGangs = exports["qb-core"]:GetCoreObject().Shared.Gangs
+    if sharedGangs == nil then
+        return gangs
+    end
+
+    for name, gangInfo in pairs(sharedGangs) do
+        gangs[name] = { label = gangInfo.label or name, type = "gang" }
+    end
+
+    return gangs
+end
+
+---[[
 --- Get every currency the player holds
 --- qb already names its keys cash / bank / crypto, so they pass through as-is
 ---]]

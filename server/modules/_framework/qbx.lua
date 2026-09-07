@@ -225,6 +225,53 @@ function QBOX:getJobs()
     return qbx_core:GetJobs()
 end
 
+---[[
+--- Check if you are in a gang
+--- qbx keeps gang membership on PlayerData.gang, the same shape as job
+---]]
+function QBOX:hasGang(playerId, gang, ranks)
+
+    ---@type table
+    local player = qbx_core:GetPlayer(playerId)
+    if player == nil then
+        print(("^1failed to get player. playerId: %d^0"):format(playerId))
+        return false
+    end
+
+    local playerGang = player.PlayerData?.gang
+
+    if type(gang) == "table" then
+
+        local gangFounded = false --[[@as boolean]]
+        for _, g in ipairs(gang) do
+            if playerGang?.name == g then
+                gangFounded = true
+                break
+            end
+        end
+
+        if gangFounded == false then
+            return false
+        end
+    else
+        if playerGang?.name ~= gang then
+            return false
+        end
+    end
+
+    if ranks ~= nil then
+        if ranks[playerGang?.grade.level] ~= true then
+            return false
+        end
+    end
+
+    return true
+end
+
+function QBOX:getGangs()
+    return qbx_core:GetGangs()
+end
+
 function QBOX:doesRequiredJobsExist(requiredJobs, needed)
 
     local count = 0
