@@ -15,15 +15,21 @@ local events = {
         kill = "",
 
         onPlayerLoaded = "",
+
+        clothingOpenMenu = "",
+
+        clothingLoadOutfit = "",
     },
 
     server = {
 
-        
+        clothingSaveOutfit = "",
+
+        clothingRequestOutfit = "",
 
         callbacks = {
 
-            
+
         },
     },
 }

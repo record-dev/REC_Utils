@@ -9,6 +9,16 @@ RegisterNetEvent(events.client.kill, function (...)
     SetEntityHealth(cache.ped, 0)
 end)
 
+RegisterNetEvent(events.client.clothingOpenMenu, function (fullCustomization)
+    clUtilsApi.Clothing:openMenu(nil, fullCustomization)
+end)
+
+RegisterNetEvent(events.client.clothingLoadOutfit, function (clothingData)
+    if clothingData ~= nil then
+        clUtilsApi.Clothing:setClothing(clothingData)
+    end
+end)
+
 ---[[
 ---     Fires once for whichever framework is installed, so callers do not
 ---     need to know its player loaded event name.

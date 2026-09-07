@@ -37,6 +37,13 @@
 ---@class REC_Utils.Client.Modules.Status
 ---@field get fun(self: REC_Utils.Client.Modules.Status, name: "hunger" | "thirst" | "stress", ): number|nil # 0 to 100, 100 is full (stress 100 is the worst), nil when the framework has no such status
 
+---@class REC_Utils.Client.Modules.Clothing
+---@field getClothing fun(self: REC_Utils.Client.Modules.Clothing, ): table current ped components/props, shape depends on the adapter
+---@field setClothing fun(self: REC_Utils.Client.Modules.Clothing, clothingData: table, ): boolean
+---@field openMenu fun(self: REC_Utils.Client.Modules.Clothing, cb?: fun(clothingData: table|false), fullCustomization?: boolean, ): boolean opens the clothing customization menu for the local player, cb receives false when cancelled
+---@field saveOutfit fun(self: REC_Utils.Client.Modules.Clothing, name: string, ): boolean persists the current clothing under name (per citizenId, resolved server side)
+---@field loadOutfit fun(self: REC_Utils.Client.Modules.Clothing, name: string, ): boolean requests a previously saved outfit and applies it once it comes back
+
 ---@class REC_Utils.Server.Modules.Framework.DoesRequiredJobsExist.Args.Job
 ---@field ranks table<integer, true>
 ---@field onDutyOnly boolean
@@ -226,6 +233,13 @@
 
 ---@class REC_Utils.Server.Modules.Notify
 ---@field trigger fun(self: REC_Utils.Server.Modules.Notify, playerId: integer, notifyType: "success" | "info" | "warning" | "error", titile: string, msg: string, duration?: integer, playSound: boolean, ): boolean
+
+---@class REC_Utils.Server.Modules.Clothing
+---@field giveClothing fun(self: REC_Utils.Server.Modules.Clothing, playerId: integer, fullCustomization?: boolean, ): boolean opens the clothing menu on the target player (tailor / dresser use case)
+---@field saveOutfit fun(self: REC_Utils.Server.Modules.Clothing, citizenId: string, name: string, clothingData: table, ): boolean
+---@field loadOutfit fun(self: REC_Utils.Server.Modules.Clothing, citizenId: string, name: string, ): table|nil
+---@field getOutfits fun(self: REC_Utils.Server.Modules.Clothing, citizenId: string, ): string[]
+---@field deleteOutfit fun(self: REC_Utils.Server.Modules.Clothing, citizenId: string, name: string, ): boolean
 
 ---[[
 ---     Locales

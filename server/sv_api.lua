@@ -30,6 +30,9 @@ local api = {
     ---@type REC_Utils.Server.Modules.Notify
     Notify = require ("@REC_Utils.server.modules.notify." .. apiShCfg.notify),
 
+    ---@type REC_Utils.Server.Modules.Clothing
+    Clothing = require ("@REC_Utils.server.modules.clothing." .. apiShCfg.clothing),
+
     WebHook = {
 
         ---@type REC_Utils.Server.Modules.WebHook.WebHook
