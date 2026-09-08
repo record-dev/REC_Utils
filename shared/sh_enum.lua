@@ -14,6 +14,13 @@ enum.placeentityTypes = {
     vehicle = "vehicle",
 }
 
+---@enum REC_Utils.Shared.Enum.GarageVehicleStates
+enum.garageVehicleStates = {
+    out = "out",
+    stored = "stored",
+    impounded = "impounded",
+}
+
 
 
 return enum

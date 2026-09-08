@@ -241,6 +241,57 @@
 ---@field getOutfits fun(self: REC_Utils.Server.Modules.Clothing, citizenId: string, ): string[]
 ---@field deleteOutfit fun(self: REC_Utils.Server.Modules.Clothing, citizenId: string, name: string, ): boolean
 
+---@class REC_Utils.Server.Modules.Garage
+---@field getGarages fun(self: REC_Utils.Server.Modules.Garage, ): table<string, REC_Utils.Server.Modules.Garage.GarageInfo> keyed by garage name
+---@field getVehicles fun(self: REC_Utils.Server.Modules.Garage, citizenId: string, filter?: REC_Utils.Server.Modules.Garage.Filter, ): REC_Utils.Server.Modules.Garage.Vehicle[]
+---@field getVehicle fun(self: REC_Utils.Server.Modules.Garage, id: string|integer, ): REC_Utils.Server.Modules.Garage.Vehicle|nil
+---@field getVehicleByPlate fun(self: REC_Utils.Server.Modules.Garage, plate: string, ): REC_Utils.Server.Modules.Garage.Vehicle|nil
+---@field isOwner fun(self: REC_Utils.Server.Modules.Garage, citizenId: string, plate: string, ): boolean
+---@field addVehicle fun(self: REC_Utils.Server.Modules.Garage, citizenId: string, model: string, opts?: REC_Utils.Server.Modules.Garage.AddVehicle.Opts, ): string|integer|nil registers a vehicle into the player's stock without a live entity, returns its id
+---@field removeVehicle fun(self: REC_Utils.Server.Modules.Garage, id: string|integer, ): boolean
+---@field setOwner fun(self: REC_Utils.Server.Modules.Garage, id: string|integer, citizenId: string, ): boolean
+---@field storeVehicle fun(self: REC_Utils.Server.Modules.Garage, playerId: integer, vehicle: integer, garage: string, opts?: REC_Utils.Server.Modules.Garage.StoreVehicle.Opts, ): boolean parks a live vehicle into garage on behalf of playerId and deletes the entity
+---@field impoundVehicle fun(self: REC_Utils.Server.Modules.Garage, vehicle: integer, opts?: REC_Utils.Server.Modules.Garage.ImpoundVehicle.Opts, ): boolean moves a live vehicle into the impound lot and deletes the entity
+
+---@class REC_Utils.Server.Modules.Garage.GarageInfo
+---@field key string
+---@field label string
+---@field type "personal" | "shared" | "impound"
+---@field coords vector3|nil
+
+---@class REC_Utils.Server.Modules.Garage.Vehicle
+---@field id string|integer rec: uid, qb / qbx: player_vehicles.id
+---@field citizenId string|nil
+---@field model string model name
+---@field plate string
+---@field garage string|nil
+---@field state REC_Utils.Shared.Enum.GarageVehicleStates
+---@field properties table|nil ox_lib vehicle properties
+
+---@class REC_Utils.Server.Modules.Garage.Filter
+---@field garage? string
+---@field states? REC_Utils.Shared.Enum.GarageVehicleStates[]
+
+---@class REC_Utils.Server.Modules.Garage.AddVehicle.Opts
+---@field plate? string defaults to a generated plate
+---@field garage? string defaults to the adapter's first personal garage (rec) or no garage (qb / qbx)
+---@field properties? table ox_lib vehicle properties
+---@field vehType? string rec only, defaults to "automobile"
+---@field label? string rec only, shown in the menu instead of the model name
+
+---@class REC_Utils.Server.Modules.Garage.StoreVehicle.Opts
+---@field model? string required by rec, the server cannot reverse an entity's model hash back into a name
+---@field properties? table ox_lib vehicle properties captured client side before the call
+---@field vehType? string rec only, defaults to "automobile"
+
+---@class REC_Utils.Server.Modules.Garage.ImpoundVehicle.Opts
+---@field model? string required by rec
+---@field garage? string defaults to the adapter's first impound garage (rec) or keeps the current garage (qb / qbx)
+---@field reason? string
+---@field fee? integer
+---@field ownerCitizenId? string rec only, who may release it
+---@field properties? table ox_lib vehicle properties captured client side before the call
+
 ---[[
 ---     Locales
 ---]]

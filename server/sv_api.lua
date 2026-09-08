@@ -33,6 +33,9 @@ local api = {
     ---@type REC_Utils.Server.Modules.Clothing
     Clothing = require ("@REC_Utils.server.modules.clothing." .. apiShCfg.clothing),
 
+    ---@type REC_Utils.Server.Modules.Garage
+    Garage = require ("@REC_Utils.server.modules.garage." .. apiShCfg.garage),
+
     WebHook = {
 
         ---@type REC_Utils.Server.Modules.WebHook.WebHook
