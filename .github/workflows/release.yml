@@ -1,8 +1,10 @@
 name: Release and Update Version
+
 on:
   push:
     tags:
       - 'v*'
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
@@ -11,13 +13,13 @@ jobs:
     steps:
       - name: Generate GitHub App token
         id: app-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547 # v1.12.0
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           token: ${{ steps.app-token.outputs.token }}
@@ -35,35 +37,68 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
+      # - name: Setup pnpm
+      #   uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      #   with:
+      #     version: 10
+
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      #   with:
+      #     node-version: 22
+      #     cache: pnpm
+      #     cache-dependency-path: web/pnpm-lock.yaml
+
+      # - name: Build web
+      #   working-directory: web
+      #   run: |
+      #     pnpm install --frozen-lockfile
+      #     pnpm build
+
       - name: Build distribution folder
         run: |
           # リポジトリ名を自動取得して変数にする
           TARGET_NAME=${{ github.event.repository.name }}
           DIST_DIR="build"
           TARGET_PATH="$DIST_DIR/$TARGET_NAME"
-          
+
           mkdir -p "$TARGET_PATH"
-          
-          # フォルダ・ファイルのコピー
-          cp -r client config locales server shared .gitignore LICENSE README.md annotations.lua fxmanifest.lua "$TARGET_PATH/"
-          
+
+          # フォルダ・ファイルのコピー (このリポジトリに無いものはスキップ)
+          for ITEM in client config handler locales server shared _install LICENSE README.md annotations.lua fxmanifest.lua; do
+            if [ -e "$ITEM" ]; then
+              cp -r "$ITEM" "$TARGET_PATH/"
+            fi
+          done
+
           # web/build の処理
           if [ -d "web/build" ]; then
             mkdir -p "$TARGET_PATH/web"
             cp -r web/build "$TARGET_PATH/web/"
           fi
-          
+
           # SQLの処理 (存在しなくてもエラーにしない)
           cp *.sql "$TARGET_PATH/" 2>/dev/null || :
-          
+
           # テストファイルの削除
           rm -f "$TARGET_PATH/shared/sh_main.test.lua"
           rm -f "$TARGET_PATH/client/cl_main.test.lua"
           rm -f "$TARGET_PATH/server/sv_main.test.lua"
-          
+
           # config.debugMode を false に強制的に設定
-          sed -i "s/^config\.debugMode\s*=\s*.*/config.debugMode = false/" "$TARGET_PATH/config/sh_config.lua"
-          sed -i "s/^config\.debugMode\s*=\s*.*/config.debugMode = false/" "$TARGET_PATH/config/sv_config.lua"
+          for CFG in "$TARGET_PATH/config/sh_config.lua" "$TARGET_PATH/config/sv_config.lua"; do
+            if [ -f "$CFG" ]; then
+              sed -i "s/^config\.debugMode\s*=\s*.*/config.debugMode = false/" "$CFG"
+            fi
+          done
+
+          # "-- RELEASE:false" が付いた行の値を false に倒す
+          # 開発中に true のままにした設定を出荷しないための保険
+          for CFG in "$TARGET_PATH"/config/*.lua; do
+            if [ -f "$CFG" ]; then
+              sed -i -E 's/^([[:space:]]+)([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*=.*--[[:space:]]*RELEASE:false[[:space:]]*$/\1\2 = false,/' "$CFG"
+            fi
+          done
 
           # ZIP圧縮 (ファイル名をリポジトリ名にする)
           cd "$DIST_DIR"
@@ -77,13 +112,14 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           tag: ${{ github.ref_name }}
           includeInvalidCommits: true
+          # other is excluded by default, keep it so a non-conventional prefix still shows up
+          excludeTypes: build,docs,style
           useGitmojis: true
           writeToFile: false
 
       - name: Create Release
         uses: softprops/action-gh-release@3d0d9888cb7fd7b750713d6e236d1fcb99157228 # v3.0.2
         with:
-
           files: ${{ github.event.repository.name }}.zip
           name: ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
@@ -91,7 +127,7 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Post to Discord
         if: steps.changelog.outcome == 'success'
         env:
