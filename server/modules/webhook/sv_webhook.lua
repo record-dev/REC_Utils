@@ -83,6 +83,30 @@ function WebHook:sendEmbed(embedData)
     return self:_send(payload)
 end
 
+---[[
+---     Send a Components V2 message (IS_COMPONENTS_V2 flag, no content and no embeds)
+---     A webhook needs ?with_components=true on its URL for Discord to accept components.
+---]]
+---@param components REC_Utils.Server.Modules.WebHook.ComponentsBuilder|table[]
+---@return boolean
+function WebHook:sendComponents(components)
+
+    if type(components) == "table" and type(components.build) == "function" then
+        components = components:build()
+    end
+
+    if type(components) ~= "table" or #components == 0 then
+        return false
+    end
+
+    return self:_send({
+        username   = self.userName,
+        avatar_url = self.avatarUrl,
+        flags      = 32768,
+        components = components,
+    })
+end
+
 ---@private
 ---@param options REC_Utils.Server.Modules.WebHook.WebHook.WebhookOptions
 ---@return boolean
@@ -95,7 +119,15 @@ function WebHook:_send(options, ...)
         avatar_url  = options.avatar_url or nil,
         tts         = options.tts or false,
         embeds      = options.embeds or nil,
+        flags       = options.flags or nil,
+        components  = options.components or nil,
     }
+
+    -- components ride on a query flag, everything else on the bare url
+    local url = self.url
+    if options.components ~= nil then
+        url = url .. (url:find("?", 1, true) ~= nil and "&" or "?") .. "with_components=true"
+    end
 
     -- discard nil items
     for k, v in pairs(payload) do
@@ -104,7 +136,7 @@ function WebHook:_send(options, ...)
         end
     end
 
-    PerformHttpRequest(self.url, function(err, text, headers)
+    PerformHttpRequest(url, function(err, text, headers)
         if err == 200 or err == 204 then
             -- Success (204 No Content is normal)
         else
@@ -122,5 +154,7 @@ end
 ---@field avatar_url? string
 ---@field tts? boolean
 ---@field embeds? REC_Utils.Server.Modules.WebHook.EmbedOptions[]
+---@field flags? integer
+---@field components? table[]
 
 return WebHook

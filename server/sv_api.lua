@@ -43,6 +43,9 @@ local api = {
 
         ---@type REC_Utils.Server.Modules.WebHook.EmbedOptionsBuilder
         EmbedOptionsBuilder = require "@REC_Utils.server.modules.webhook.sv_embedOptionsBuilder",
+
+        ---@type REC_Utils.Server.Modules.WebHook.ComponentsBuilder
+        ComponentsBuilder = require "@REC_Utils.server.modules.webhook.sv_componentsBuilder",
     },
 }
 
