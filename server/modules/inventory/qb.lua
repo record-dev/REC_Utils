@@ -87,6 +87,11 @@ function QB_INVENTORY:openInventory(playerId, inv)
     return true
 end
 
+function QB_INVENTORY:openPlayerInventory(playerId, targetId)
+    qb_inventory:OpenInventoryById(playerId, targetId)
+    return true
+end
+
 function QB_INVENTORY:addItem(inv, item, amount, metaData, slot, cb)
     local items = (function ()
         if type(item) == "string" then

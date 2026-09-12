@@ -30,6 +30,11 @@ function OX_INVENTORY:openInventory(playerId, inv)
     return true
 end
 
+-- forceOpenInventory skips the police / canSteal gate that the 'player' type normally has
+function OX_INVENTORY:openPlayerInventory(playerId, targetId)
+    return ox_inventory:forceOpenInventory(playerId, "player", targetId) ~= nil
+end
+
 function OX_INVENTORY:getItem(inv, item, metaData)
     return ox_inventory:GetItem(inv, item, metaData)
 end
