@@ -137,6 +137,19 @@
 ---@field stashSchema fun(self: REC_Utils.Server.Modules.Inventory): REC_Utils.Server.Modules.Inventory.StashSchema|nil
 ---@field imageSource fun(self: REC_Utils.Server.Modules.Inventory): REC_Utils.Server.Modules.Inventory.ImageSource|nil
 ---@field itemImages fun(self: REC_Utils.Server.Modules.Inventory): table<string, string>
+---@field onUsedItem fun(self: REC_Utils.Server.Modules.Inventory, item: string, onUsedItem: REC_Utils.Server.Modules.Inventory.OnUsedItem, ): boolean
+
+---[[
+---     One item use, normalized across inventories
+---     metaData is nil when the item carries none.
+---]]
+---@class REC_Utils.Server.Modules.Inventory.UsedItem
+---@field source integer
+---@field name string
+---@field slot? integer
+---@field metaData? table
+
+---@alias REC_Utils.Server.Modules.Inventory.OnUsedItem fun(usedItem: REC_Utils.Server.Modules.Inventory.UsedItem)
 
 ---@class REC_Utils.Server.Modules.Inventory.ImageSource
 ---@field resource string

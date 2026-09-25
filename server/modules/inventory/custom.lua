@@ -112,4 +112,9 @@ function CUSTOM_INVENTORY:itemImages()
     return {}
 end
 
+-- no inventory resource to hook, so the callback never fires
+function CUSTOM_INVENTORY:onUsedItem(item, onUsedItem)
+    return false
+end
+
 return CUSTOM_INVENTORY
