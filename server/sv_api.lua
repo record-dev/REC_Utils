@@ -24,8 +24,14 @@ local api = {
     ---@type REC_Utils.Server.Modules.VehicleKeys
     VehicleKeys = require ("@REC_Utils.server.modules.vehiclekeys." .. apiShCfg.vehiclekeys ),
 
-    ---@type REC_Utils.Server.Modules.Dispatch
-    Dispatch = require ("@REC_Utils.server.modules.dispatch." .. apiShCfg.dispatch),
+    Dispatch = {
+
+        ---@type REC_Utils.Server.Modules.Dispatch
+        Dispatch = require ("@REC_Utils.server.modules.dispatch." .. apiShCfg.dispatch),
+
+        ---@type REC_Utils.Server.modules.Dispatch.ConfigBuilder
+        DispatchConfigBuilder = require "@REC_Utils.server.modules.dispatch._configBuilder",
+    },
 
     ---@type REC_Utils.Server.Modules.Notify
     Notify = require ("@REC_Utils.server.modules.notify." .. apiShCfg.notify),
