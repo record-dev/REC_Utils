@@ -87,6 +87,11 @@ function QB_INVENTORY:openInventory(playerId, inv)
     return true
 end
 
+function QB_INVENTORY:openPlayerInventory(playerId, targetId)
+    qb_inventory:OpenInventoryById(playerId, targetId)
+    return true
+end
+
 function QB_INVENTORY:addItem(inv, item, amount, metaData, slot, cb)
     local items = (function ()
         if type(item) == "string" then
@@ -187,6 +192,35 @@ function QB_INVENTORY:itemImages()
     end
 
     return images
+end
+
+---[[
+---     Called when a player uses the item
+---     Registers it as a usable item on the framework, which keeps one callback per
+---     item, and nothing is consumed unless the callback removes it.
+---]]
+function QB_INVENTORY:onUsedItem(item, onUsedItem)
+
+    ---@param src integer
+    ---@param itemData { name: string, slot?: integer, info?: table, }
+    local function onUse(src, itemData)
+        onUsedItem({
+            source = src,
+            name = item,
+            slot = itemData?.slot,
+            metaData = type(itemData?.info) == "table" and next(itemData.info) ~= nil and itemData.info or nil,
+        })
+    end
+
+    if framework == frameworkTypes.qbx then
+        exports.qbx_core:CreateUseableItem(item, onUse)
+        return true
+    elseif framework == frameworkTypes.qb then
+        exports["qb-core"]:GetCoreObject({ "Functions", }).Functions.CreateUseableItem(item, onUse)
+        return true
+    end
+
+    return false
 end
 
 return QB_INVENTORY

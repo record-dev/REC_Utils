@@ -125,6 +125,7 @@
 ---@field items fun(self: REC_Utils.Server.Modules.Inventory, name?: string): REC_Utils.Server.Modules.Inventory.Items.Return|nil
 ---@field getInventory fun(self: REC_Utils.Server.Modules.Inventory, inv: integer|string, ): REC_Utils.Server.Modules.Inventory.GetInventory.Return|false
 ---@field openInventory fun(self: REC_Utils.Server.Modules.Inventory, playerId: integer, inv: integer|string, ): boolean
+---@field openPlayerInventory fun(self: REC_Utils.Server.Modules.Inventory, playerId: integer, targetId: integer, ): boolean opens targetId's player inventory on playerId's screen, bypassing the inventory's own police / steal gate
 ---@field getItem fun(self: REC_Utils.Server.Modules.Inventory, inv: integer|string, item: string|string[], metaData?: string|table, ): REC_Utils.Server.Modules.Inventory.GetItem.Return|REC_Utils.Server.Modules.Inventory.GetItem.Return[]
 ---@field getItemCount fun(self: REC_Utils.Server.Modules.Inventory, playerId: integer, item: string, ):integer
 ---@field addItem fun(self: REC_Utils.Server.Modules.Inventory, inv: integer|string, item: string|string[], amount: integer, metaData?: string|table, slot?: integer, cb?: fun(success: boolean, response?: string) ): boolean, string?
@@ -136,6 +137,19 @@
 ---@field stashSchema fun(self: REC_Utils.Server.Modules.Inventory): REC_Utils.Server.Modules.Inventory.StashSchema|nil
 ---@field imageSource fun(self: REC_Utils.Server.Modules.Inventory): REC_Utils.Server.Modules.Inventory.ImageSource|nil
 ---@field itemImages fun(self: REC_Utils.Server.Modules.Inventory): table<string, string>
+---@field onUsedItem fun(self: REC_Utils.Server.Modules.Inventory, item: string, onUsedItem: REC_Utils.Server.Modules.Inventory.OnUsedItem, ): boolean
+
+---[[
+---     One item use, normalized across inventories
+---     metaData is nil when the item carries none.
+---]]
+---@class REC_Utils.Server.Modules.Inventory.UsedItem
+---@field source integer
+---@field name string
+---@field slot? integer
+---@field metaData? table
+
+---@alias REC_Utils.Server.Modules.Inventory.OnUsedItem fun(usedItem: REC_Utils.Server.Modules.Inventory.UsedItem)
 
 ---@class REC_Utils.Server.Modules.Inventory.ImageSource
 ---@field resource string

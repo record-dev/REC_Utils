@@ -30,6 +30,11 @@ function OX_INVENTORY:openInventory(playerId, inv)
     return true
 end
 
+-- forceOpenInventory skips the police / canSteal gate that the 'player' type normally has
+function OX_INVENTORY:openPlayerInventory(playerId, targetId)
+    return ox_inventory:forceOpenInventory(playerId, "player", targetId) ~= nil
+end
+
 function OX_INVENTORY:getItem(inv, item, metaData)
     return ox_inventory:GetItem(inv, item, metaData)
 end
@@ -150,6 +155,34 @@ function OX_INVENTORY:itemImages()
     end
 
     return images
+end
+
+---[[
+---     Called after a player has used the item
+---     ox_inventory only fires this for items it treats as usable, and consumption
+---     follows the item definition (consume) rather than the callback.
+---]]
+function OX_INVENTORY:onUsedItem(item, onUsedItem)
+
+    ---@param playerId integer
+    ---@param name string
+    ---@param slot integer
+    ---@param metaData? table
+    AddEventHandler("ox_inventory:usedItem", function (playerId, name, slot, metaData)
+
+        if name ~= item then
+            return
+        end
+
+        onUsedItem({
+            source = playerId,
+            name = name,
+            slot = slot,
+            metaData = metaData,
+        })
+    end)
+
+    return true
 end
 
 return OX_INVENTORY

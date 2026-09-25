@@ -24,7 +24,7 @@ function DISPATCH_PS_DISPATCH:call(config)
         origin = config.coords,
         jobs = config.jobs,
         code = config.code,
-        codeName = "NONE",
+        codeName = config.codeName or "NONE",
         displayCode = config.code,
         icon = config.icon,
         priority = config.priority == "high" and 1 or config.priority == "medium" and 2 or 3,

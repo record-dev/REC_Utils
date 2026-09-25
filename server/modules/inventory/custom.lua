@@ -30,6 +30,11 @@ function CUSTOM_INVENTORY:openInventory(playerId, inv)
     return true
 end
 
+-- no inventory resource to show, so nothing opens
+function CUSTOM_INVENTORY:openPlayerInventory(playerId, targetId)
+    return false
+end
+
 function CUSTOM_INVENTORY:getItem(inv, item, metaData)
     return nil
 end
@@ -105,6 +110,11 @@ end
 
 function CUSTOM_INVENTORY:itemImages()
     return {}
+end
+
+-- no inventory resource to hook, so the callback never fires
+function CUSTOM_INVENTORY:onUsedItem(item, onUsedItem)
+    return false
 end
 
 return CUSTOM_INVENTORY
