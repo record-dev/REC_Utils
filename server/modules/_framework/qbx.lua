@@ -333,10 +333,13 @@ function QBOX:setOnPlayerLoaded(onPlayerLoaded)
     end)
 end
 
----not work. do not use thie
+---[[
+---     qbx_core fires this at the end of Logout, after the player is removed
+---     (QBCore:Server:OnPlayerUnload comes before that, while the player still looks loaded)
+---]]
 function QBOX:setOnPlayerUnLoaded(onPlayerUnLoaded)
     ---@param src integer
-    AddEventHandler("QBCore:Server:OnPlayerUnload", function (src)
+    AddEventHandler("qbx_core:server:playerLoggedOut", function (src)
         onPlayerUnLoaded(src)
     end)
 end
