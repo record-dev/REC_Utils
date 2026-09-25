@@ -48,7 +48,6 @@ function REC_CLOTHING:setClothing(clothingData)
     return exports.REC_Clothing:applyOutfit(clothingData) == true
 end
 
--- fullCustomization asks for every tab, REC_Clothing still caps it with config.compat.clientTabs
 function REC_CLOTHING:openMenu(cb, fullCustomization)
 
     if isStarted() == false then
