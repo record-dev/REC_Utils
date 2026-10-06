@@ -23,6 +23,11 @@ function CUSTOM_INVENTORY:getInventory(inv)
     return false
 end
 
+-- not supported on this inventory, so nothing can be listed
+function CUSTOM_INVENTORY:getInventoryItems(inv)
+    return {}
+end
+
 function CUSTOM_INVENTORY:openInventory(playerId, inv)
 
     

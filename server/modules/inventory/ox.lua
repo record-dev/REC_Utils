@@ -25,6 +25,11 @@ function OX_INVENTORY:getInventory(inv)
     return ox_inventory:GetInventory(inv)
 end
 
+-- slot keyed table straight from ox_inventory, walk it with pairs
+function OX_INVENTORY:getInventoryItems(inv)
+    return ox_inventory:GetInventoryItems(inv) or {}
+end
+
 function OX_INVENTORY:openInventory(playerId, inv)
     TriggerClientEvent('ox_inventory:openInventory', playerId, 'stash', inv)
     return true

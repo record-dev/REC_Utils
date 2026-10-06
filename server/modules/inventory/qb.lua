@@ -82,6 +82,11 @@ function QB_INVENTORY:getInventory(inv)
     return qb_inventory:GetInventory(inv)
 end
 
+-- not supported on this inventory, so nothing can be listed
+function QB_INVENTORY:getInventoryItems(inv)
+    return {}
+end
+
 function QB_INVENTORY:openInventory(playerId, inv)
     qb_inventory:OpenInventory(playerId, inv)
     return true

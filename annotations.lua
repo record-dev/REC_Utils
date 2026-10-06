@@ -124,6 +124,7 @@
 ---@class REC_Utils.Server.Modules.Inventory
 ---@field items fun(self: REC_Utils.Server.Modules.Inventory, name?: string): REC_Utils.Server.Modules.Inventory.Items.Return|nil
 ---@field getInventory fun(self: REC_Utils.Server.Modules.Inventory, inv: integer|string, ): REC_Utils.Server.Modules.Inventory.GetInventory.Return|false
+---@field getInventoryItems fun(self: REC_Utils.Server.Modules.Inventory, inv: integer|string, ): table<integer, { name: string, count: integer, slot?: integer, metadata?: table, }>
 ---@field openInventory fun(self: REC_Utils.Server.Modules.Inventory, playerId: integer, inv: integer|string, ): boolean
 ---@field openPlayerInventory fun(self: REC_Utils.Server.Modules.Inventory, playerId: integer, targetId: integer, ): boolean opens targetId's player inventory on playerId's screen, bypassing the inventory's own police / steal gate
 ---@field getItem fun(self: REC_Utils.Server.Modules.Inventory, inv: integer|string, item: string|string[], metaData?: string|table, ): REC_Utils.Server.Modules.Inventory.GetItem.Return|REC_Utils.Server.Modules.Inventory.GetItem.Return[]
