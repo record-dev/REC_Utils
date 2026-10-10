@@ -25,6 +25,13 @@ OX.getResourceName, OX.isReady, OX.waitUntilReady = ready("ox_core")
 
 local ox_core = exports.ox_core
 
+-- ox_core does not export GetGroup, so read the group state the same way Ox.GetGroup does
+---@param name string
+---@return table|nil
+local function getGroup(name)
+    return GlobalState[("group.%s"):format(name)]
+end
+
 ---[[
 --- map an ox_core group onto the PlayerData.job shape
 --- activeGroup wins, otherwise the first group found is used
@@ -51,7 +58,7 @@ local function getJobFromGroups(playerId)
     end)()
 
     -- get the label
-    local group = ox_core:GetGroup(jobName)
+    local group = getGroup(jobName)
 
     return {
         name = jobName,
@@ -74,6 +81,12 @@ function OX:getPlayers()
     ---@type REC_Utils.Server.Modules.Framework.GetPlayers.Return[]
     local players = {}
     for _, v in pairs(oxPlayers) do
+
+        -- skip players still on character select
+        if v.charId == nil then
+            goto continue
+        end
+
         local playerData = self:getPlayerData(v.source)
         if playerData == nil then
             goto continue
@@ -103,13 +116,25 @@ function OX:getPlayerData(playerId)
         return nil
     end
 
+    -- no character picked yet is a normal state
+    if player.charId == nil then
+        return nil
+    end
+
+    -- firstName / lastName sit in the private metadata, so they are not on the exported object
+    ---@type string|nil
+    local firstName = ox_core:CallPlayer(playerId, "get", "firstName")
+
+    ---@type string|nil
+    local lastName = ox_core:CallPlayer(playerId, "get", "lastName")
+
     ---@type REC_Utils.Server.Modules.Framework.GetPlayers.Return.PlayerData
     return {
         source = player.source,
         citizenId = tostring(player.stateId),
         charinfo = {
-            firstname = player.firstName,
-            lastname = player.lastName,
+            firstname = firstName or "",
+            lastname = lastName or "",
         },
         job = getJobFromGroups(playerId),
     }
@@ -275,16 +300,24 @@ end
 ---]]
 function OX:getJobs()
 
-    ---@type table[]
-    local groups = ox_core:GetGroupsByType("job") or {}
+    ---@type string[]
+    local names = ox_core:GetGroupsByType("job") or {}
 
     ---@type table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
     local jobs = {}
-    for _, group in pairs(groups) do
-        jobs[group.name] = {
-            label = group.label,
+    for _, name in ipairs(names) do
+        local group = getGroup(name)
+        if group == nil then
+            goto continue
+        end
+
+        jobs[name] = {
+            label = group.label or name,
             type = group.type,
+            grades = group.grades,
         }
+
+        ::continue::
     end
 
     return jobs
@@ -333,16 +366,24 @@ end
 ---]]
 function OX:getGangs()
 
-    ---@type table[]
-    local groups = ox_core:GetGroupsByType("gang") or {}
+    ---@type string[]
+    local names = ox_core:GetGroupsByType("gang") or {}
 
     ---@type table<string, REC_Utils.Server.Modules.Framework.GetJobs.Return>
     local gangs = {}
-    for _, group in pairs(groups) do
-        gangs[group.name] = {
-            label = group.label,
+    for _, name in ipairs(names) do
+        local group = getGroup(name)
+        if group == nil then
+            goto continue
+        end
+
+        gangs[name] = {
+            label = group.label or name,
             type = group.type,
+            grades = group.grades,
         }
+
+        ::continue::
     end
 
     return gangs
