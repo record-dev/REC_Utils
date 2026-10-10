@@ -125,7 +125,7 @@ function DispatchConfigBuilder:setSound(soundName, soundSet)
     return self
 end
 
----lb-tablet and ps-dispatch ignore this
+---lb-tablet ignores this
 ---@param radius number|nil
 ---@return self
 function DispatchConfigBuilder:setRadius(radius)
