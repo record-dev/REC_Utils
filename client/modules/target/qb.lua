@@ -1,6 +1,6 @@
 
----@type REC_Library.Client.API, REC_Library.Shared.API
-local clApi, shApi = require "@REC_Library.client.cl_api", require "@REC_Library.shared.sh_api"
+---@type REC_Library.Shared.API
+local shApi = require "@REC_Library.shared.sh_api"
 local apiShCfg = shApi.Config
 local target = apiShCfg.target
 
@@ -17,9 +17,36 @@ local QB_TARGET = {}
 
 local qb_target = exports["qb-target"]
 
+---[[
+---     Convert the common options to a qb-target parameters table
+---     qb-target keys the options by label and expects { options = {}, distance = n }
+---]]
+---@param options REC_Utils.Client.Modules.Target.TargetOptionsConfig
+---@return { options: table[], distance: number|nil, }
+local function toParameters(options)
+    return {
+        options = {
+            {
+                label = options.label,
+                icon = options.icon or "fa-regular fa-circle-question",
+                type = "client",
+                event = options.clientEvent,
+                canInteract = options.onCanInteract,
+                action = options.onSelect,
+            },
+        },
+        distance = options.distance,
+    }
+end
+
 function QB_TARGET:addModel(model, options)
 
-    qb_target:AddTargetModel(model, options)
+    if options.label == nil then
+        print("^1failed to add qb-target model option, label is nil...^0")
+        return false
+    end
+
+    qb_target:AddTargetModel(model, toParameters(options))
 
     return true
 end
@@ -33,21 +60,12 @@ end
 
 function QB_TARGET:addLocalEntity(entity, options)
 
-    local newOptions = clApi.Class.Target.Qb.QbTargetConfigBuilder:new(
-            ("%s-%d"):format(GetInvokingResource(), entity),
-            "client",
-            options.label
-        )
-        :setEvent(options.clientEvent)
-        :setIcon(options.icon)
-        :setCanInteract(options.onCanInteract)
-        :setAction(options.onSelect)
-        :build()
+    if options.label == nil then
+        print("^1failed to add qb-target entity option, label is nil...^0")
+        return false
+    end
 
-    qb_target:AddTargetEntity(entity, {
-        options = { newOptions, },
-        distance = options.distance,
-    })
+    qb_target:AddTargetEntity(entity, toParameters(options))
 
     return true
 end
