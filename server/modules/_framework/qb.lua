@@ -420,6 +420,7 @@ function QB:characterSchema()
         table = "players",
         citizenIdColumn = "citizenid",
         inventoryColumn = "inventory",
+        countKey = apiShCfg.inventory == apiShEnums.InventoryTypes.qb and "amount" or nil,
         moneyColumn = "money",
         moneyKeys = {
             cash = "cash",
@@ -435,8 +436,14 @@ end
 
 ---[[
 ---     Owned vehicles, when the framework keeps the storage on the vehicle row
+---     qb-inventory keeps trunk / glovebox in its own inventories table, so the stash pass covers them.
 ---]]
 function QB:vehicleSchema()
+
+    if apiShCfg.inventory == apiShEnums.InventoryTypes.qb then
+        return nil
+    end
+
     return {
         table = "player_vehicles",
         citizenIdColumn = "citizenid",

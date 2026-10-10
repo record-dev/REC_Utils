@@ -161,6 +161,7 @@
 ---@field table string
 ---@field citizenIdColumn string
 ---@field inventoryColumn? string nil when the inventory resource owns the storage
+---@field countKey? string key holding the quantity in each item of inventoryColumn, "count" when nil
 ---@field moneyColumn? string JSON column holding the balances, nil when the framework keeps none
 ---@field moneyKeys? table<string, REC_Utils.Server.Modules.Framework.MoneyTypes> key inside moneyColumn = money kind
 ---@field lastLoginColumn? string nil counts every row
@@ -176,9 +177,10 @@
 ---@class REC_Utils.Server.Modules.Inventory.StashSchema
 ---@field table string
 ---@field nameColumn string
----@field ownerColumn string
+---@field ownerColumn? string nil when the stash rows carry no owner
 ---@field dataColumn string
 ---@field updatedColumn? string
+---@field countKey? string key holding the quantity in each item, "count" when nil
 
 ---@class REC_Utils.Server.Modules.Inventory.Items.Return
 ---@field name string
