@@ -298,6 +298,7 @@ function ESX:getJobs()
         jobs[name] = {
             label = job.label or name,
             type = job.type,
+            grades = job.grades,
         }
     end
 

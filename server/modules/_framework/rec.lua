@@ -152,6 +152,7 @@ function REC:getJobs()
         result[name] = {
             label = job.label,
             type = job.type,
+            grades = job.grades,
         }
     end
 
@@ -177,6 +178,7 @@ function REC:getGangs()
         result[name] = {
             label = gang.label,
             type = gang.type,
+            grades = gang.grades,
         }
     end
 

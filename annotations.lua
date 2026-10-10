@@ -98,6 +98,7 @@
 ---@class REC_Utils.Server.Modules.Framework.GetJobs.Return
 ---@field label string
 ---@field type? string
+---@field grades? table grade definitions as the framework keeps them, keyed by level (string or number); nil when it has none
 ---@
 
 ---[[
