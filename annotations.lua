@@ -228,10 +228,10 @@
 ---@field isDead fun(self: REC_Utils.Server.Modules.Medical, playerId: integer, ): boolean
 
 ---@class REC_Utils.Server.Modules.Door
----@field getDoor fun(self: REC_Utils.Server.Modules.Door, doorId: integer, ): table
+---@field getDoor fun(self: REC_Utils.Server.Modules.Door, doorId: integer|string, ): table doorId is the string Config.DoorList key on qb-doorlock
 ---@field getDoorFromName fun(self: REC_Utils.Server.Modules.Door, name: string, ): table
 ---@field getAllDoors fun(self: REC_Utils.Server.Modules.Door, ): table<integer, REC_Utils.Server.Modules.Door.GetAllDoors.Return>
----@field setDoorState fun(self: REC_Utils.Server.Modules.Door, doorId: integer, state: integer, ): boolean
+---@field setDoorState fun(self: REC_Utils.Server.Modules.Door, doorId: integer|string, state: integer, ): boolean doorId is the string Config.DoorList key on qb-doorlock
 
 ---@class REC_Utils.Server.Modules.Door.GetAllDoors.Return
 ---@field id integer
