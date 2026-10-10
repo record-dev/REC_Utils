@@ -16,12 +16,6 @@ if framework ~= frameworkTypes.ox then
     return
 end
 
--- the ox_core lib defines the global Ox
-local loaded = pcall(require, "@ox_core.lib.init")
-if loaded == false then
-    print("^3failed to load @ox_core/lib/init.lua, statuses are unavailable...^0")
-end
-
 ---@type REC_Utils.Client.Modules.Status
 ---@diagnostic disable-next-line: missing-fields
 local OX = {}
@@ -34,16 +28,8 @@ local inverted = {
 
 function OX:get(name)
 
-    if loaded == false or Ox == nil then
-        return nil
-    end
-
-    local player = Ox.GetPlayer()
-    if player == nil or player.getStatus == nil then
-        return nil
-    end
-
-    local value = tonumber(player.getStatus(name))
+    -- the same call Ox.GetPlayer().getStatus makes, without loading the ox_core lib
+    local value = tonumber(exports.ox_core:CallPlayer("getStatus", name))
     if value == nil then
         return nil
     end
