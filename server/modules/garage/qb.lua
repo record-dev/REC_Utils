@@ -19,7 +19,7 @@ local vehicleStates = shEnums.garageVehicleStates
 ---@diagnostic disable-next-line: missing-fields
 local QB_GARAGE = {}
 
--- qb-garages keeps everything in player_vehicles and exposes no server exports, so this talks to the table directly
+-- qb-garages keeps the vehicles in player_vehicles and has no export for them, so this talks to the table directly
 local oxmysql = exports.oxmysql
 
 ---@type string
@@ -81,10 +81,33 @@ local function generatePlate(length)
     return plate
 end
 
--- qb-garages holds its garage list in a client shared config, nothing server side can read it
+-- qb-garages only exports the garage list, vehicles still come from the table
+-- depot is the impound lot, gang / job garages are shared and the rest are personal
 function QB_GARAGE:getGarages()
-    print("^3qb-garages does not expose its garage list, returning an empty table...^0")
-    return {}
+
+    ---@type table<string, REC_Utils.Server.Modules.Garage.GarageInfo>
+    local garages = {}
+
+    for _, record in ipairs(exports["qb-garages"]:getAllGarages() or {}) do
+        garages[record.name] = {
+            key = record.name,
+            label = record.label,
+            type = (function ()
+                if record.type == "depot" then
+                    return "impound"
+                end
+
+                if record.type == "gang" or record.type == "job" then
+                    return "shared"
+                end
+
+                return "personal"
+            end)(),
+            coords = record.takeVehicle,
+        }
+    end
+
+    return garages
 end
 
 function QB_GARAGE:getVehicles(citizenId, filter)
