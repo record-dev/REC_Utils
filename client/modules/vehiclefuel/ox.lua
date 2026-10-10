@@ -30,7 +30,7 @@ function OX_FUEL:setFuel(vehicle, fuel)
     fuel = math.min(math.max(fuel + 0.0, 0.0), 100.0)
 
     SetVehicleFuelLevel(vehicle, fuel)
-    Entity(vehicle).state:set("fuel", fuel, true)
+    Entity(vehicle).state:set("fuel", fuel, NetworkGetEntityIsNetworked(vehicle) == 1)
 
     return true
 end
