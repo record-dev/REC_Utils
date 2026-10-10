@@ -16,6 +16,8 @@ end
 
 local wasabi_ambulance = exports.wasabi_ambulance
 
+local hasWarnedIsDead = false
+
 ---@type REC_Utils.Server.Modules.Medical
 ---@diagnostic disable-next-line: missing-fields
 local WSB_MEDICALV1 = {}
@@ -40,7 +42,26 @@ function WSB_MEDICALV1:isLastStand(playerId)
 end
 
 function WSB_MEDICALV1:isDead(playerId)
-    return 
+
+    -- same export as wasabi_ambulance_v2, not confirmed against v1, so fall back to the ped health
+    local success, inDistress = pcall(function ()
+        return wasabi_ambulance:isPlayerInDistress(playerId)
+    end)
+    if success == true then
+        return inDistress == true
+    end
+
+    if hasWarnedIsDead == false then
+        hasWarnedIsDead = true
+        print("^3wasabi_ambulance does not export isPlayerInDistress, using the ped health instead...^0")
+    end
+
+    local ped = GetPlayerPed(playerId)
+    if ped == 0 then
+        return false
+    end
+
+    return GetEntityHealth(ped) <= 0
 end
 
 return WSB_MEDICALV1

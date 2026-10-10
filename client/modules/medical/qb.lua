@@ -16,7 +16,14 @@ end
 local QB_MEDICAL = {}
 
 function QB_MEDICAL:isLastStand()
-    return false
+
+    -- fetched on every call so a restarted qb-core never leaves a dead function reference
+    local playerData = exports["qb-core"]:GetCoreObject({ "Functions", }).Functions.GetPlayerData()
+    if playerData == nil then
+        return false
+    end
+
+    return playerData.metadata?.inlaststand == true
 end
 
 function QB_MEDICAL:isDead()
