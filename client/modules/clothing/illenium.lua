@@ -28,19 +28,42 @@ function ILLENIUM_CLOTHING:setClothing(clothingData)
 end
 
 -- fullCustomization also opens the ped/face options, default only opens components and props
+-- componentConfig / propConfig / enableExit are read by the NUI, so all of them are listed
 function ILLENIUM_CLOTHING:openMenu(cb, fullCustomization)
     exports["illenium-appearance"]:startPlayerCustomization(function (appearance)
         if cb ~= nil then
-            cb(appearance)
+            cb(appearance or false)
         end
     end, {
-        ped          = fullCustomization == true,
-        headBlend    = fullCustomization == true,
-        faceFeatures = fullCustomization == true,
-        headOverlays = fullCustomization == true,
-        tattoos      = fullCustomization == true,
-        components   = true,
-        props        = true,
+        ped             = fullCustomization == true,
+        headBlend       = fullCustomization == true,
+        faceFeatures    = fullCustomization == true,
+        headOverlays    = fullCustomization == true,
+        tattoos         = fullCustomization == true,
+        components      = true,
+        componentConfig = {
+            masks          = true,
+            upperBody      = true,
+            lowerBody      = true,
+            bags           = true,
+            shoes          = true,
+            scarfAndChains = true,
+            bodyArmor      = true,
+            shirts         = true,
+            decals         = true,
+            jackets        = true,
+        },
+        props           = true,
+        propConfig      = {
+            hats      = true,
+            glasses   = true,
+            ear       = true,
+            watches   = true,
+            bracelets = true,
+        },
+        enableExit      = true,
+        hasTracker      = false,
+        automaticFade   = false,
     })
     return true
 end
