@@ -33,7 +33,31 @@ function QB_INVENTORY:items(name)
 end
 
 function QB_INVENTORY:getItemCount(item)
-    error("getItemCount is not supported in qb-inventory, use items() instead to get the item and its count.")
+
+    -- qb-inventory keeps the items on the player data, one entry per slot
+    local playerData = (function ()
+        if framework == frameworkTypes.qbx then
+            return exports.qbx_core:GetPlayerData()
+        end
+        return qb_core:GetCoreObject({ "Functions", }).Functions.GetPlayerData()
+    end)()
+
+    if playerData == nil or type(playerData.items) ~= "table" then
+        return 0
+    end
+
+    local count = 0
+    for _, invItem in pairs(playerData.items) do
+        if type(invItem) ~= "table" or invItem.name ~= item then
+            goto continue
+        end
+
+        count = count + (tonumber(invItem.amount) or 0)
+
+        ::continue::
+    end
+
+    return count
 end
 
 function QB_INVENTORY:setIsBusy(isBusy)
