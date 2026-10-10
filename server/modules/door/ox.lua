@@ -30,8 +30,7 @@ function OX_DOOR:getAllDoors()
 end
 
 function OX_DOOR:setDoorState(doorId, state)
-    ox_doorlock:setDoorState(doorId, state)
-    return true
+    return ox_doorlock:setDoorState(doorId, state) == true
 end
 
 return OX_DOOR
