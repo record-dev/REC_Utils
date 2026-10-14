@@ -44,6 +44,24 @@
 ---@field saveOutfit fun(self: REC_Utils.Client.Modules.Clothing, name: string, ): boolean persists the current clothing under name (per citizenId, resolved server side)
 ---@field loadOutfit fun(self: REC_Utils.Client.Modules.Clothing, name: string, ): boolean requests a previously saved outfit and applies it once it comes back
 
+---@class REC_Utils.Client.Modules.NameTag
+---@field getIsVisible fun(self: REC_Utils.Client.Modules.NameTag, playerId?: integer, ): boolean whether the player allows others to see the tag (own tag if no playerId), the setting value and not whether it is on the screen
+---@field setVisible fun(self: REC_Utils.Client.Modules.NameTag, visible: boolean, ): boolean sets the visible setting of your own tag, false when it is not loaded yet or rejected
+---@field getTitle fun(self: REC_Utils.Client.Modules.NameTag, playerId?: integer, ): string|nil "" = no title, nil = not loaded
+---@field getNameTag fun(self: REC_Utils.Client.Modules.NameTag, playerId?: integer, ): REC_Utils.Client.Modules.NameTag.Info|nil copy of the tag info (own tag if no playerId)
+
+---@class REC_Utils.Client.Modules.NameTag.Info
+---@field playerId integer
+---@field firstName string
+---@field lastName string
+---@field visible boolean
+---@field displayJob boolean
+---@field displayId boolean
+---@field isBeginner boolean
+---@field title string
+---@field routingBucket integer
+---@field label? string may contain the job emoji
+
 ---@class REC_Utils.Server.Modules.Framework.DoesRequiredJobsExist.Args.Job
 ---@field ranks table<integer, true>
 ---@field onDutyOnly boolean
@@ -309,6 +327,27 @@
 ---@field fee? integer
 ---@field ownerCitizenId? string rec only, who may release it
 ---@field properties? table ox_lib vehicle properties captured client side before the call
+
+---@class REC_Utils.Server.Modules.NameTag
+---@field setTitle fun(self: REC_Utils.Server.Modules.NameTag, playerId: integer, title: string|nil, ): boolean nil removes the title
+---@field getTitle fun(self: REC_Utils.Server.Modules.NameTag, playerId: integer, ): string|nil "" = no title, nil = not loaded
+---@field getIsVisible fun(self: REC_Utils.Server.Modules.NameTag, playerId: integer, ): boolean the setting value, not whether the tag is on the screen
+---@field setVisible fun(self: REC_Utils.Server.Modules.NameTag, playerId: integer, visible: boolean, ): boolean trusted call, skips allowActions and the cooldown
+---@field getNameTag fun(self: REC_Utils.Server.Modules.NameTag, playerId: integer, ): REC_Utils.Server.Modules.NameTag.Info|nil copy of the tag info
+
+---@class REC_Utils.Server.Modules.NameTag.Info
+---@field playerId integer
+---@field citizenId string
+---@field firstName string
+---@field lastName string
+---@field orgFirstName? string
+---@field orgLastName? string
+---@field visible boolean
+---@field displayJob boolean
+---@field displayId boolean
+---@field isBeginner boolean
+---@field title string
+---@field routingBucket integer
 
 ---[[
 ---     Locales

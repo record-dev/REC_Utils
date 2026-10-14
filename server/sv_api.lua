@@ -42,6 +42,9 @@ local api = {
     ---@type REC_Utils.Server.Modules.Garage
     Garage = require ("@REC_Utils.server.modules.garage." .. apiShCfg.garage),
 
+    ---@type REC_Utils.Server.Modules.NameTag
+    NameTag = require ("@REC_Utils.server.modules.nametag." .. apiShCfg.nametag),
+
     WebHook = {
 
         ---@type REC_Utils.Server.Modules.WebHook.WebHook

@@ -45,6 +45,9 @@ local api = {
     ---@type REC_Utils.Client.Modules.Clothing
     Clothing = require ("@REC_Utils.client.modules.clothing." .. apiShCfg.clothing),
 
+    ---@type REC_Utils.Client.Modules.NameTag
+    NameTag = require ("@REC_Utils.client.modules.nametag." .. apiShCfg.nametag),
+
     ---@type REC_Utils.Client.Modules.Raycast
     Raycast = require "@REC_Utils.client.modules.raycast",
 
